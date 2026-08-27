@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Distributed secure service edge network">
+  <defs>
+    <radialGradient id="glowA" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#58efe3" stop-opacity=".30"/>
+      <stop offset="1" stop-color="#58efe3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#6e9cff" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#6e9cff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#ffad66" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#ffad66" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="route" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58efe3" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#58efe3" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#58efe3" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="routeBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6e9cff" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#6e9cff" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#6e9cff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="mesh" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0v80" fill="none" stroke="#7fd8d3" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#58efe3" fill-opacity=".10"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .pkt      { fill: #58efe3; }
+    .pkt-blue { fill: #6e9cff; }
+    .pkt-halo { fill: #58efe3; opacity: .15; }
+    @media (prefers-reduced-motion: reduce) {
+      .pkt, .pkt-blue, .pkt-halo { display: none; }
+    }
+  </style>
+
+  <rect width="1600" height="900" fill="#06121b"/>
+  <rect width="1600" height="900" fill="url(#mesh)"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+
+  <ellipse cx="1180" cy="330" rx="520" ry="440" fill="url(#glowA)"/>
+  <ellipse cx="330" cy="700" rx="460" ry="380" fill="url(#glowB)"/>
+  <ellipse cx="820" cy="120" rx="380" ry="260" fill="url(#glowC)"/>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M120 250C420 140 700 470 1010 300S1420 140 1520 250" stroke="url(#route)" stroke-width="1.6"/>
+    <path d="M90 520C400 470 640 690 980 560s390-260 520-180" stroke="url(#routeBlue)" stroke-width="1.4"/>
+    <path d="M170 760C520 800 760 560 1080 640s330 120 400 60" stroke="url(#route)" stroke-width="1.2" stroke-opacity=".7"/>
+    <path d="M60 380C300 300 520 420 760 380" stroke="url(#route)" stroke-width="1" stroke-opacity=".5"/>
+  </g>
+
+  <g stroke="#58efe3" stroke-opacity=".22" fill="none">
+    <circle cx="1010" cy="300" r="150"/>
+    <circle cx="1010" cy="300" r="104" stroke-dasharray="5 9"/>
+    <circle cx="1010" cy="300" r="58" stroke-opacity=".4"/>
+  </g>
+  <circle cx="1010" cy="300" r="150" fill="url(#glowA)" opacity=".5"/>
+
+  <g fill="#06121b" stroke="#58efe3" stroke-width="2">
+    <circle cx="1010" cy="300" r="13"/>
+    <circle cx="120" cy="250" r="8"/>
+    <circle cx="1520" cy="250" r="8"/>
+    <circle cx="90" cy="520" r="8"/>
+    <circle cx="1500" cy="380" r="8"/>
+    <circle cx="170" cy="760" r="8"/>
+    <circle cx="1480" cy="700" r="8"/>
+    <circle cx="760" cy="380" r="6" stroke-opacity=".7"/>
+    <circle cx="640" cy="690" r="6" stroke-opacity=".7"/>
+  </g>
+
+  <g fill="#58efe3" fill-opacity=".5">
+    <rect x="1004" y="294" width="12" height="12" rx="2"/>
+  </g>
+
+  <g stroke="#6e9cff" stroke-opacity=".35" stroke-width="1" fill="none">
+    <rect x="1420" y="600" width="140" height="90" rx="4"/>
+    <rect x="60" y="150" width="120" height="76" rx="4"/>
+  </g>
+
+  <!-- Traffic drifting along each route. Deliberately slow: this sits behind
+       headline type, so it should register as ambient life, not motion that
+       competes for attention. -->
+  <g>
+    <circle class="pkt-halo" r="11">
+      <animateMotion path="M120 250C420 140 700 470 1010 300S1420 140 1520 250" dur="11s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="pkt" r="4.5">
+      <animateMotion path="M120 250C420 140 700 470 1010 300S1420 140 1520 250" dur="11s" repeatCount="indefinite"/>
+    </circle>
+    <circle class="pkt" r="3.5" opacity=".72">
+      <animateMotion path="M120 250C420 140 700 470 1010 300S1420 140 1520 250" dur="11s" begin="5.5s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle class="pkt-blue" r="4">
+      <animateMotion path="M90 520C400 470 640 690 980 560s390-260 520-180" dur="13s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle class="pkt" r="3.5" opacity=".65">
+      <animateMotion path="M170 760C520 800 760 560 1080 640s330 120 400 60" dur="15s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle class="pkt" r="3" opacity=".55">
+      <animateMotion path="M60 380C300 300 520 420 760 380" dur="9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
