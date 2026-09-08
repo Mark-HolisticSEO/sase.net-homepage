@@ -325,13 +325,14 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 main > section.guide-article {
   padding-top: 0;
   padding-bottom: 0;
+  overflow-anchor: none;
 }
 main > section.guide-article:has(.guide-fold[open]) {
   padding-bottom: clamp(40px, 5vw, 88px);
 }
 main > section.guide-article[data-step]::before { top: 28px; }
 
-.guide-fold { border-top: 1px solid var(--line-dark); }
+.guide-fold { border-top: 1px solid var(--line-dark); overflow-anchor: none; }
 .how.guide-article .guide-fold { border-top-color: var(--line-dark-2); }
 
 .guide-summary {
@@ -483,12 +484,22 @@ main > section.guide-article[data-step]::before { top: 28px; }
 .trust-index { font: 500 9px var(--mono); letter-spacing: .14em; opacity: .65; }
 .trust-card h3 { margin: 44px 0 12px; font: 600 clamp(30px, 3.2vw, 50px)/.94 var(--display); text-transform: uppercase; }
 .trust-lede { margin: 0; max-width: 42ch; font-size: 14px; line-height: 1.7; opacity: .78; }
+/* Navy on blue is already high-contrast; the dim used for white-on-ink only
+   makes it muddy. */
+.trust-card-accent .trust-lede { opacity: 1; }
+.trust-card-accent .trust-index { opacity: .8; }
 
 .trust-info {
   position: absolute; inset: auto 0 0 0; padding: 26px 30px 30px;
   background: linear-gradient(to top, var(--cyan) 72%, rgba(88, 239, 227, 0));
   color: var(--navy);
   transform: translateY(101%); transition: transform .4s var(--ease);
+}
+/* The blue accent card would put cyan on blue — too close to read as a
+   separate layer, so it slides up in ink instead. */
+.trust-card-accent .trust-info {
+  background: linear-gradient(to top, var(--ink) 72%, rgba(14, 32, 41, 0));
+  color: var(--white);
 }
 .trust-card:hover .trust-info,
 .trust-card:focus-visible .trust-info,

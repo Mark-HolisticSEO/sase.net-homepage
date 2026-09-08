@@ -460,13 +460,25 @@ const revealWithin = (el) => {
 
 /* Native `name` on <details> already makes the five guides exclusive in
    current browsers. The toggle handler is the fallback, and it marks inner
-   reveals visible so a closed article does not stay at opacity 0 after open. */
+   reveals visible so a closed article does not stay at opacity 0 after open.
+
+   Opening one fold while another is open collapses a tall sibling. The
+   browser keeps the old scrollY (and may scrollIntoView the newly opened
+   <details>, which is now several screens tall), so the reader is left
+   looking past the article they just expanded. After the exclusive close
+   we pin the opened guide under the header. Hash navigation sets
+   suppressGuideScroll so subsection links still land on their own target. */
 const guideFolds = [...document.querySelectorAll('[data-guide]')];
+let suppressGuideScroll = 0;
 
 const openGuideFor = (el) => {
   if (!el) return null;
   const fold = el.closest('[data-guide]') || el.querySelector('[data-guide]');
-  if (fold && !fold.open) fold.open = true;
+  if (fold && !fold.open) {
+    suppressGuideScroll += 1;
+    fold.open = true;
+    suppressGuideScroll -= 1;
+  }
   if (fold) revealWithin(fold);
   return fold;
 };
@@ -476,6 +488,16 @@ guideFolds.forEach((item) => {
     if (!item.open) return;
     guideFolds.forEach((other) => { if (other !== item) other.open = false; });
     revealWithin(item);
+    if (suppressGuideScroll) return;
+    /* scrollToElement is declared below; toggle only fires on user or
+       programmatic open, after this file has finished evaluating. */
+    const target = item.closest('.guide-article') || item;
+    const pinOpenedGuide = () => {
+      if (!item.open) return;
+      scrollToElement(target, { instant: true });
+    };
+    pinOpenedGuide();
+    requestAnimationFrame(() => requestAnimationFrame(pinOpenedGuide));
   });
 });
 
@@ -500,7 +522,7 @@ addEventListener('keydown', (event) => {
   }
 });
 
-const scrollToElement = (el, { focus = false } = {}) => {
+const scrollToElement = (el, { focus = false, instant = false } = {}) => {
   cancelScrollAnimation();
 
   const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
@@ -523,8 +545,14 @@ const scrollToElement = (el, { focus = false } = {}) => {
     if (!focusable) el.addEventListener('blur', () => el.removeAttribute('tabindex'), { once: true });
   };
 
-  if (reducedMotion || Math.abs(distance) < 2) {
+  /* Instant is for exclusive-accordion correction: the layout already jumped,
+     and animating from the wrong place reads as "scrolled past the article." */
+  if (instant || reducedMotion || Math.abs(distance) < 2) {
+    const html = document.documentElement;
+    const previous = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
     scrollTo(0, destination);
+    html.style.scrollBehavior = previous;
     land();
     return;
   }
