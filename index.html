@@ -375,6 +375,47 @@
           <h3>What are the Steps to Deploy SASE?</h3>
           <p>SASE deployment consists of 6 steps that take a SASE architecture from readiness assessment through policy design, vendor selection, SASE migration, optimization, and validation.</p>
           <p>Each SASE rollout uses this order so SASE implementation does not skip inventory or policy before a vendor is chosen.</p>
+          <!-- Visual summary of the rollout. The diagram fills the first grid
+               cell, so the five cards run 01-05 across the remaining columns. -->
+          <div class="how-row">
+            <div class="how-diagram reveal" aria-hidden="true">
+              <svg viewBox="0 0 200 200" role="presentation">
+                <path d="M100 12 188 100 100 188 12 100Z" class="how-diamond-outer"/>
+                <path d="M100 44 156 100 100 156 44 100Z" class="how-diamond-inner"/>
+                <path d="M100 12v176M12 100h176" class="how-diamond-cross"/>
+                <circle cx="100" cy="100" r="13" class="how-diamond-core"/>
+                <circle class="how-diamond-packet" r="4">
+                  <animateMotion path="M100 44L156 100L100 156L44 100Z" dur="7s" repeatCount="indefinite"/>
+                </circle>
+              </svg>
+              <span>One policy plane</span>
+            </div>
+            <article class="how-card reveal">
+              <b>01</b>
+              <h4 class="how-card-title">Assess current infrastructure</h4>
+              <p>Document appliances, traffic patterns, and access policies before migration begins.</p>
+            </article>
+            <article class="how-card reveal">
+              <b>02</b>
+              <h4 class="how-card-title">Select the service model</h4>
+              <p>Match the model to organizational scale, coverage requirements, and identity sources.</p>
+            </article>
+            <article class="how-card reveal">
+              <b>03</b>
+              <h4 class="how-card-title">Migrate identity and access</h4>
+              <p>Replace static permissions with zero-trust policies at the application level.</p>
+            </article>
+            <article class="how-card reveal">
+              <b>04</b>
+              <h4 class="how-card-title">Extend inspection</h4>
+              <p>Activate web gateway, cloud access broker, and data loss prevention together across web and cloud traffic.</p>
+            </article>
+            <article class="how-card reveal">
+              <b>05</b>
+              <h4 class="how-card-title">Retire and consolidate</h4>
+              <p>Retire fragmented consoles as the unified policy engine takes over, then confirm the old path carries no production sessions.</p>
+            </article>
+          </div>
           <ol class="article-steps">
             <li>Assess the current identity, WAN, VPN, and firewall inventory so SASE deployment begins with a documented estate and a named list of systems to retire.</li>
             <li>Define identity, application, and inspection policy in one language so SASE implementation has a single source of intent before any traffic is cut over.</li>
