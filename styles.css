@@ -379,7 +379,6 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 /* ---------------------------------------------------------------- trust --- */
 
 .trust-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: clamp(40px, 5vw, 66px); }
-
 .trust-card {
   position: relative; overflow: hidden;
   min-height: 300px; padding: 30px;
