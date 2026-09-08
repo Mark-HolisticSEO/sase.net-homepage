@@ -17,7 +17,7 @@ The homepage is built to the wireframe in `example-homepage-zenarmor.drawio.png`
 - A benefits accordion that swaps the diagram, tag, and caption as you select
 - A locally scrolling rail of fourteen core SASE attributes beside a sticky panel
 - Thirteen architecture principles as accordions, four visible until "show all"
-- Three long-form in-page guides: SASE deployment, SASE use cases, and Managed SASE
+- Five long-form in-page guides: SASE deployment, use cases, Managed SASE, SASE for MSPs, and SASE for business
 - Six-area platform evaluation guidance and four themed internal-linking tracks
 - Staggered scroll reveals and hero parallax, built on transform/opacity only
 - Responsive layouts, keyboard-driven tabs, reduced-motion support, and semantic HTML
@@ -51,7 +51,7 @@ Opening `index.html` directly also works, but a local server more closely matche
 
 ```text
 .
-├── index.html                            # Homepage structure and content, including the deployment, use case, and Managed SASE guides
+├── index.html                            # Homepage structure and content, including the five long-form SASE guides
 ├── styles.css                            # Design tokens, layout, responsive states
 ├── script.js                             # Tabs, accordions, diagram swap, reveal
 ├── motion.js                             # Scroll reveals, hero parallax, magnetic tilt
@@ -76,17 +76,19 @@ spine matches the `data-step` attribute on each `<section>`.
 | 05 | Deploying SASE | Full SASE deployment guide on this page: definition, models, steps, prerequisites, and challenges |
 | 06 | SASE use cases | Full SASE use case guide on this page: common use cases, remote work, branch, cloud, Zero Trust, ransomware, third-party access, Shadow IT, and industries |
 | 07 | Managed SASE | Full Managed SASE guide on this page: provider functions, SASE vs Managed SASE, Managed SASE vs MSSP, benefits, drawbacks, selection, and SLAs |
-| 08 | Core attributes | Fourteen attributes in a locally scrolling rail |
-| 09 | Architecture | Thirteen design principles as expandable accordions |
-| 10 | Leadership | Executive quote — **attribution provisional** |
-| 11 | Evaluating a platform | Six evaluation areas as tabs |
-| 12 | Articles | Article hub; three guides live, remaining cards provisional |
-| 13 | Continue reading | Four reading tracks, eight internal links each |
-| 14 | Edge notes | Briefing signup — **offer provisional, form disabled** |
+| 08 | SASE for MSPs | Full MSP delivery guide on this page: multi-tenancy, delivery, benefits, MSP vs MSSP, platform requirements, pricing, onboarding, and building a practice |
+| 09 | SASE for business | Full business guide on this page: adoption drivers, distributed workforces, multi-branch, cost benefits, scaling, security posture, business case, and getting started |
+| 10 | Core attributes | Fourteen attributes in a locally scrolling rail |
+| 11 | Architecture | Thirteen design principles as expandable accordions |
+| 12 | Leadership | Executive quote — **attribution provisional** |
+| 13 | Evaluating a platform | Six evaluation areas as tabs |
+| 14 | Articles | Article hub; five in-page guides |
+| 15 | Continue reading | Four reading tracks, eight internal links each |
+| 16 | Edge notes | Briefing signup — **offer provisional, form disabled** |
 
 ## Provisional sections
 
-Three sections are on the page with their structure finished but their content
+Two sections are on the page with their structure finished but their content
 awaiting client confirmation. Leadership and Edge notes are marked three ways
 so placeholder copy cannot be mistaken for approved copy:
 
@@ -94,14 +96,10 @@ so placeholder copy cannot be mistaken for approved copy:
 2. A visible `.provisional-flag` notice on the page
 3. An HTML comment listing exactly what must be supplied
 
-Articles keeps three dashed pending cards until titles and destinations land;
-it no longer shows a visitor-facing pending notice.
-
 | Section | Waiting on |
 | --- | --- |
-| Leadership (10) | Named speaker and real title. Must **not** read "CEO of SASE.net" — SASE.net is an informational property, not a company. Placeholder reads `[Name pending] / [Title pending] — Zenarmor`. |
-| Articles (12) | Titles, standfirsts, and destinations for remaining reviewed articles. Deployment (`#how`), use cases (`#use-cases`), and Managed SASE (`#managed-sase`) are live on this page. |
-| Edge notes (14) | Confirmed offer, topics, owner, approver, and cadence — plus a real form endpoint. |
+| Leadership (12) | Named speaker and real title. Must **not** read "CEO of SASE.net" — SASE.net is an informational property, not a company. Placeholder reads `[Name pending] / [Title pending] — Zenarmor`. |
+| Edge notes (16) | Confirmed offer, topics, owner, approver, and cadence — plus a real form endpoint. |
 
 **The briefing form has no backend.** Its `<fieldset>` carries `disabled`, so it
 cannot accept an address it would discard, and `script.js` returns an honest

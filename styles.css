@@ -998,22 +998,30 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 .article-lede { display: grid; gap: 16px; max-width: 72ch; }
 .article-lede p { margin: 0; color: #b6cacf; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.7; }
 
-/* In-page long-form articles (.how, .usecases, .managed) share one measure:
-   the guide itself is full-bleed, while each run of prose stays at 78ch. */
+/* In-page long-form articles (.how, .usecases, .managed, .msp, .business) share
+   one measure: the guide is full-bleed, each run of prose stays at 78ch. */
 .how .deploy-guide,
 .usecases .deploy-guide,
-.managed .deploy-guide { max-width: none; }
+.managed .deploy-guide,
+.msp .deploy-guide,
+.business .deploy-guide { max-width: none; }
 .how .article-lede,
 .usecases .article-lede,
-.managed .article-lede {
+.managed .article-lede,
+.msp .article-lede,
+.business .article-lede {
   margin: 0 0 8px;
 }
 .how .article-lede p,
 .usecases .article-lede p,
-.managed .article-lede p { color: var(--slate); }
+.managed .article-lede p,
+.msp .article-lede p,
+.business .article-lede p { color: var(--slate); }
 .how .article-prose,
 .usecases .article-prose,
-.managed .article-prose { max-width: none; }
+.managed .article-prose,
+.msp .article-prose,
+.business .article-prose { max-width: none; }
 .how .article-block > p,
 .how .article-subblock > p,
 .how .article-items,
@@ -1028,7 +1036,17 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 .managed .article-subblock > p,
 .managed .article-items,
 .managed .article-table-wrap,
-.managed .article-prose ol.article-steps { max-width: 78ch; }
+.managed .article-prose ol.article-steps,
+.msp .article-block > p,
+.msp .article-subblock > p,
+.msp .article-items,
+.msp .article-table-wrap,
+.msp .article-prose ol.article-steps,
+.business .article-block > p,
+.business .article-subblock > p,
+.business .article-items,
+.business .article-table-wrap,
+.business .article-prose ol.article-steps { max-width: 78ch; }
 
 .deploy-jump {
   display: flex; flex-wrap: wrap; gap: 10px 22px;
@@ -1203,7 +1221,7 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 .article-next a:hover { transform: translateY(-1px); }
 
 .how-follow { margin: 36px 0 0; }
-.article-card.is-pending { border-style: dashed; pointer-events: none; }
+
 
 @media (max-width: 980px) {
   .article-shell { grid-template-columns: 1fr; }

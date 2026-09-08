@@ -38,8 +38,7 @@
       <a href="#architecture">Architecture</a>
       <a href="#evaluate">Evaluate</a>
       <a href="#how">Deploy</a>
-      <a href="#use-cases">Use cases</a>
-      <a href="#managed-sase">Managed</a>
+      <a href="#articles">Guides</a>
       <a class="button button-small" href="#evaluate">Evaluate a platform <span aria-hidden="true">↓</span></a>
     </nav>
   </header>
@@ -1099,8 +1098,506 @@
       </div>
     </section>
 
+    <!-- ========================================================== SASE FOR MSPs ARTICLE -->
+    <section class="msp section-light" id="msp" data-step="08">
+      <p class="section-kicker reveal">Service providers</p>
+      <div class="section-heading reveal">
+        <h2>SASE for MSPs:<br><em>How managed service providers deliver SASE</em></h2>
+        <p>SASE for MSPs is the packaging, delivery, and monetization of Secure Access Service Edge through a managed service provider rather than direct enterprise purchase.</p>
+      </div>
+      <div class="deploy-guide article-prose">
+        <div class="article-lede reveal">
+          <p>SASE for MSPs converts SD-WAN, ZTNA, SWG, CASB, and FWaaS into a single contracted outcome, a structure the industry also labels MSP SASE. This article covers multi-tenant architecture, recurring revenue structures, and the service delivery models through which a provider operates as a SASE managed service provider.</p>
+          <p>An MSP holds the vendor relationship, licensing, and platform expertise, and the client receives security and networking outcomes without in-house deployment. CompTIA identifies managed security services among the fastest-growing service lines within the MSP channel. The sections that follow trace SASE for MSP delivery across core components, multi-tenancy, delivery models, revenue generation, and platform evaluation.</p>
+        </div>
+        <nav class="deploy-jump reveal" aria-label="Guide sections">
+          <a href="#what-is-sase-for-msps">What is SASE for MSPs</a>
+          <a href="#msp-delivery">How MSPs deliver SASE</a>
+          <a href="#msp-multi-tenancy">Multi-tenancy</a>
+          <a href="#msp-benefits">Benefits</a>
+          <a href="#msp-vs-mssp">MSP vs MSSP</a>
+          <a href="#msp-platform-requirements">Platform requirements</a>
+          <a href="#msp-pricing">Pricing</a>
+          <a href="#msp-white-label">White-label</a>
+          <a href="#msp-onboarding">Client onboarding</a>
+          <a href="#msp-challenges">Challenges</a>
+          <a href="#msp-small-business">Small business clients</a>
+          <a href="#build-sase-practice">Building a practice</a>
+        </nav>
+
+        <section id="what-is-sase-for-msps" class="article-block reveal">
+          <h3>What is SASE for MSPs?</h3>
+          <p>A managed service provider licenses, configures, and monitors Secure Access Service Edge on behalf of client organizations under SASE for MSP delivery, rather than the client purchasing the platform.</p>
+          <p>SASE for MSPs positions the provider as the operational layer between the SASE vendor and the end client, handling deployment and daily policy enforcement.</p>
+          <p>The provider bundles SD-WAN, ZTNA, SWG, CASB, and FWaaS into one contracted service line, and billing runs on a recurring subscription, priced per seat or per site, rather than a one-time enterprise license purchase.</p>
+          <p>A single provider console administers many client tenants at once, isolating the policy, identity, and traffic data of each organization.</p>
+          <p>CompTIA ranks managed security services among the fastest-growing categories within the broader MSP channel.</p>
+          <p>The model shifts configuration, monitoring, and incident response from internal client staff to the engineering team of the provider, through platforms categorized among <a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-secure-access-service-edge-sase" target="_blank" rel="noopener noreferrer">SASE Solutions</a>. Zenarmor operates as one such platform, built specifically for multi-tenant MSP delivery.</p>
+        </section>
+
+        <section id="msp-delivery" class="article-block reveal">
+          <h3>How Do MSPs Deliver SASE to Clients?</h3>
+          <p>MSPs deliver SASE to clients through a structured process of platform provisioning, identity integration, policy configuration, and ongoing monitoring managed entirely by the provider under the broader SASE for MSP model.</p>
+          <p>Delivery starts with tenant provisioning, where the provider allocates isolated policy space for the client inside a multi-tenant console.</p>
+          <p>Identity integration follows, connecting the Identity Provider of the client (Microsoft Entra ID or Okta) through SAML 2.0 or OpenID Connect so access decisions carry accurate user and device context.</p>
+          <p>Policy configuration maps user groups to approved applications, establishing least-privilege entitlements before any traffic routes through the platform.</p>
+          <p>Traffic then flows through the points of presence of the provider, where SD-WAN, ZTNA, SWG, CASB, and FWaaS apply enforcement without client-side hardware.</p>
+          <p>Monitoring and incident response continue after go-live, with the provider adjusting policy as client staffing and application usage change, a delivery pattern shared broadly across the <a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-managed-security-service-provider-mssp" target="_blank" rel="noopener noreferrer">MSSP</a> category.</p>
+          <p>Contract terms and pricing structure attached to the delivery model shape the recurring revenue model addressed later in this article.</p>
+        </section>
+
+        <section id="msp-multi-tenancy" class="article-block reveal">
+          <h3>What is Multi-Tenancy in SASE for MSPs?</h3>
+          <p>Multi-tenancy in SASE for MSPs is the architectural property that lets one provider console manage policy, identity, and traffic for many independent client organizations.</p>
+          <p>Each tenant maintains isolated policy sets, identity integrations, and traffic logs, preventing configuration or data crossover between clients.</p>
+          <p>Role-based access controls limit technician visibility to only the tenants assigned to them within the console.</p>
+          <p>Reporting stays isolated per tenant, so a client portal displays only the traffic of that organization and never the data of another client.</p>
+          <p>Isolation extends to identity sources, with each tenant connecting its own Identity Provider through SAML 2.0 or OpenID Connect without shared credential space.</p>
+          <p>Multi-tenancy determines how many clients one engineering team supports concurrently, a capacity constraint that shapes the delivery model.</p>
+
+          <section id="msp-manage-tenants" class="article-subblock">
+            <h4>How Do MSPs Manage Multiple Client SASE Tenants?</h4>
+            <p>Managing multiple client SASE tenants is the operational practice of administering isolated policy, identity, and monitoring for many organizations from a single provider console under the broader SASE for MSP structure.</p>
+            <p>A unified dashboard lists every client tenant, letting technicians switch between organizations without separate logins per client.</p>
+            <p>API access allows the provider to automate provisioning, applying identical baseline policy templates across new tenants in minutes rather than hours.</p>
+            <p>Per-tenant alerting routes incidents to the assigned technician team, keeping response times consistent regardless of client count.</p>
+            <p>Consumption data (seat counts, session volume, data usage) gets tracked per tenant, feeding into billing and capacity planning.</p>
+            <p>Change management follows a staged rollout, testing policy updates on one tenant before pushing to the full client base.</p>
+            <p>Tenant volume managed through this structure shapes the recurring revenue a provider generates, as addressed next.</p>
+          </section>
+        </section>
+
+        <section id="msp-benefits" class="article-block reveal">
+          <h3>What are the Benefits of SASE for MSPs?</h3>
+          <p>The benefits of SASE for MSPs are the four commercial and operational gains a provider realizes by delivering SASE as a contracted service line.</p>
+          <p>The benefits of SASE for MSPs are listed below.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Recurring revenue</strong> is the predictable monthly income a provider collects through per-seat or per-site subscription billing. Recurring revenue replaces one-time project income with a forecastable contract base, supporting long-term staffing decisions. Contracts commonly run 12 to 36 months, giving a provider multi-year revenue visibility per client.</p>
+            </article>
+            <article>
+              <p><strong>Differentiation</strong> is the competitive separation a provider gains by offering a converged security and networking service instead of point products. Differentiation lets a provider compete against larger MSSPs without matching their headcount or infrastructure investment. A provider bundling SD-WAN, ZTNA, and FWaaS under one contract stands apart from competitors selling firewall or VPN services alone.</p>
+            </article>
+            <article>
+              <p><strong>Simplified management</strong> is the reduction in operational complexity gained by administering policy from one multi-tenant console instead of separate tools per function. Simplified management cuts the technician hours required per client, raising the client count one engineer supports. A single console handling SD-WAN, SWG, and CASB replaces the 3 to 5 separate tools a provider previously maintained.</p>
+            </article>
+            <article>
+              <p><strong>Scalability</strong> is the capacity to onboard new clients without proportional increases in engineering headcount. Scalability comes from API-driven provisioning and reusable policy templates that apply baseline configuration in minutes. A provider using automated onboarding adds new tenants at a fraction of the labor cost required under manual, appliance-based deployment.</p>
+            </article>
+          </div>
+          <p>Realizing those four benefits depends on selecting a platform built for multi-tenant operation, a requirement examined later in this article.</p>
+
+          <section id="msp-recurring-revenue" class="article-subblock">
+            <h4>How Does SASE Create Recurring Revenue for MSPs?</h4>
+            <p>Recurring revenue creation through SASE is the process by which a provider converts platform licensing and management labor into a repeating subscription charge under the SASE for MSP billing model.</p>
+            <p>Per-seat pricing scales revenue with client headcount, while per-site pricing scales with the count of connected branch locations.</p>
+            <p>Margin comes from the spread between wholesale platform licensing cost and the marked-up client rate charged monthly.</p>
+            <p>Contracts commonly run 12 to 36 months, locking in predictable income against which a provider plans staffing and infrastructure investment.</p>
+            <p>Bundling SASE with adjacent services (endpoint detection, backup, or helpdesk) raises the total contract value beyond a single security line item.</p>
+            <p>Automated tenant provisioning lowers the labor cost per client, widening the margin captured from each subscription.</p>
+            <p>Revenue mechanics built on the subscription model shape the platform requirements a provider must evaluate.</p>
+          </section>
+
+          <section id="msp-differentiate" class="article-subblock">
+            <h4>How Does SASE Help MSPs Differentiate?</h4>
+            <p>Differentiation through SASE is the competitive positioning a provider gains by offering one converged security and networking service instead of separate point products under the SASE for MSP model.</p>
+            <p>A bundled offering (SD-WAN, ZTNA, SWG, CASB, and FWaaS) lets a provider compete against larger MSSPs without matching their headcount or infrastructure spend.</p>
+            <p>Vendor-backed uptime guarantees, 99.9 percent or higher, pass through to the client-facing service level agreement of the provider.</p>
+            <p>White-label delivery lets a smaller provider present enterprise-grade capability under its own brand, without disclosing the underlying platform vendor.</p>
+            <p>Consolidated billing under one contract simplifies procurement, removing the multi-vendor negotiation that a competing point-solution provider requires.</p>
+            <p>A single support contact for security and networking issues reduces client friction during incident response.</p>
+            <p>Differentiation gained through the bundled model supports the platform requirements examined later.</p>
+          </section>
+        </section>
+
+        <section id="msp-vs-mssp" class="article-block reveal">
+          <h3>What is the Difference Between an MSP and an MSSP in SASE Delivery?</h3>
+          <p>The difference between an MSP and an MSSP in SASE delivery is that an MSP manages general IT infrastructure and networking, while an MSSP focuses specifically on security monitoring and threat response.</p>
+          <p>Both provider types operate within the broader SASE for MSP channel, though their scope diverges once SASE components move into production.</p>
+          <p>An MSP owns SD-WAN configuration, network uptime, and general helpdesk support.</p>
+          <p>Threat detection, incident response, and continuous security monitoring across the same environment fall to the MSSP.</p>
+          <p>Contract scope determines which components each provider delivers, with SD-WAN and FWaaS routing falling to the MSP and CASB or SWG threat monitoring falling to the MSSP.</p>
+          <p>Some providers operate as both, delivering the full SASE stack under one contract rather than splitting components across two vendors.</p>
+          <p>The difference between an MSP and an MSSP in SASE delivery is shown in the table below.</p>
+          <div class="article-table-wrap">
+            <table class="article-table">
+              <caption class="sr-only">An MSP compared with an MSSP in SASE delivery across function, scope, deployment, security model, and cost</caption>
+              <thead>
+                <tr><th scope="col">Attribute</th><th scope="col">MSP</th><th scope="col">MSSP</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Primary function</th><td>Network and infrastructure management</td><td>Security monitoring and threat response</td></tr>
+                <tr><th scope="row">Scope</th><td>SD-WAN, uptime, general support</td><td>CASB, SWG, incident response</td></tr>
+                <tr><th scope="row">Deployment model</th><td>Client-wide IT operation</td><td>Security-focused subset of IT</td></tr>
+                <tr><th scope="row">Security model</th><td>Enablement of security tools</td><td>Active threat detection and response</td></tr>
+                <tr><th scope="row">Cost model</th><td>Per-seat or per-site subscription</td><td>Per-seat or tiered security subscription</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>MSP and MSSP models converge under a single SASE contract when one provider delivers the full stack, a consolidation pattern examined next.</p>
+
+          <section id="msp-become-mssp" class="article-subblock">
+            <h4>Can an MSP Become an MSSP Through SASE?</h4>
+            <p>Yes, an MSP can become an MSSP through SASE.</p>
+            <p>Adding continuous security monitoring and incident response on top of existing network management services completes the transition.</p>
+            <p>A platform bundling ZTNA, SWG, and CASB gives the provider the technical foundation to detect and respond to threats, not only route traffic.</p>
+            <p>The shift requires dedicated security staff and 24/7 monitoring capability, conditions that a pure network-focused MSP may not yet meet.</p>
+            <p>Convergence under SASE for MSPs blurs the line between the two provider categories.</p>
+            <p>Platform requirements supporting that convergence are addressed next.</p>
+          </section>
+        </section>
+
+        <section id="msp-platform-requirements" class="article-block reveal">
+          <h3>What Should MSPs Look for in a SASE Platform?</h3>
+          <p>The things MSPs should look for in a SASE platform are the five capabilities that make multi-client delivery operable at scale.</p>
+          <p>The things MSPs should look for in a SASE platform are listed below.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Multi-tenancy</strong> is the platform capability that isolates policy, identity, and traffic logs for each client within a single console. Multi-tenancy lets one provider team administer many client organizations without configuration crossover between accounts. A platform supporting role-based access limits technician visibility to only the tenants assigned to them.</p>
+            </article>
+            <article>
+              <p><strong>White-label</strong> is the platform option that lets a provider brand the client-facing portal under its own name, hiding the underlying vendor. White-label capability lets smaller providers present enterprise-grade service without disclosing the licensing relationship behind it. Co-branded documentation and tiered technical escalation accompany white-label partnership agreements.</p>
+            </article>
+            <article>
+              <p><strong>Billing</strong> is the platform function that exposes per-tenant consumption data (seat counts, data volume, session counts) for invoicing. Billing integration converts platform usage into client invoices, removing manual reconciliation between systems. Usage-based billing data feeds into recurring subscription pricing, charged per seat or per site.</p>
+            </article>
+            <article>
+              <p><strong>API access</strong> is the platform interface that exposes provisioning, policy, and reporting functions for automated control. API automation lets a provider onboard new clients in minutes by applying reusable policy templates instead of manual configuration. REST APIs commonly expose entitlement, tenant, and billing endpoints for integration with provider tools.</p>
+            </article>
+            <article>
+              <p><strong>Central management</strong> is the single console through which a provider administers SD-WAN, ZTNA, SWG, CASB, and FWaaS across every client tenant. Central management reduces the technician hours required per client, raising the client count one engineer supports. A unified dashboard listing every tenant replaces the separate tools a provider previously maintained per function, a consolidation model Zenarmor applies through its distributed enforcement architecture.</p>
+            </article>
+          </div>
+          <p>Meeting those five requirements positions a provider to move new clients onto the platform, a migration process addressed later in this article.</p>
+        </section>
+
+        <section id="msp-pricing" class="article-block reveal">
+          <h3>How Should MSPs Price SASE Services?</h3>
+          <p>Pricing SASE services consists of 5 steps that convert platform licensing cost and management labor into a client-facing subscription rate under the SASE for MSPs model.</p>
+          <p>MSPs should price SASE services by following the five steps listed below.</p>
+          <ol class="article-steps">
+            <li>Calculate wholesale cost by determining the licensing cost per seat or per site paid to the platform vendor, establishing the baseline expense before markup.</li>
+            <li>Estimate labor hours by projecting the management time required per client, covering onboarding, monitoring, and incident response, to size the operational cost layered onto licensing.</li>
+            <li>Set the markup percentage by applying a target margin to the combined licensing and labor cost, producing the rate charged to the client.</li>
+            <li>Structure the contract term by fixing the subscription length, 12 to 36 months, locking in predictable recurring revenue for staffing and planning purposes.</li>
+            <li>Bundle adjacent services by adding endpoint detection, backup, or helpdesk to the same contract, raising total client value beyond a single security line item.</li>
+          </ol>
+          <p>Validate the pricing model by confirming that margin per client covers licensing, labor, and support costs while remaining competitive against comparable MSSP offerings.</p>
+          <p>A correct pricing structure sustains the recurring revenue foundation that makes SASE for MSPs a viable service line, a foundation that depends on smooth client onboarding.</p>
+        </section>
+
+        <section id="msp-white-label" class="article-block reveal">
+          <h3>Can MSPs Offer SASE as a White-Label Service?</h3>
+          <p>Yes, MSPs can offer SASE as a white-label service.</p>
+          <p>The option depends on the underlying platform supporting branded portals and hidden vendor attribution.</p>
+          <p>Vendors extending white-label partnership agreements provide co-branded documentation and tiered technical escalation reserved for provider staff.</p>
+          <p>The capability depends on the platform vendor permitting brand substitution, a condition not every SASE license includes.</p>
+          <p>White-label delivery under SASE for MSPs lets smaller providers present enterprise-grade capability without disclosing the licensing relationship behind it, a capability that depends on client onboarding running smoothly, addressed next.</p>
+        </section>
+
+        <section id="msp-onboarding" class="article-block reveal">
+          <h3>How Do MSPs Onboard Clients to SASE?</h3>
+          <p>Onboarding clients to SASE consists of 6 steps that move a new client from initial assessment to active policy enforcement under the SASE for MSPs delivery model.</p>
+          <p>MSPs onboard clients to SASE by following the six steps listed below.</p>
+          <ol class="article-steps">
+            <li>Assess the client environment by inventorying applications, users, and branch locations, establishing the scope of resources the platform must cover.</li>
+            <li>Provision the tenant by allocating isolated policy space for the client inside the multi-tenant console, separating its configuration from every other tenant.</li>
+            <li>Integrate identity by connecting the Identity Provider of the client (Microsoft Entra ID or Okta) through SAML 2.0 or OpenID Connect to establish accurate access context.</li>
+            <li>Configure policy by mapping user groups to approved applications, applying least-privilege entitlements before any traffic routes through the platform.</li>
+            <li>Activate security services by enabling SD-WAN, ZTNA, SWG, CASB, and FWaaS in sequence, extending enforcement across network and application traffic.</li>
+            <li>Train client contacts by briefing designated staff on reporting access and escalation procedures, aligning expectations with contracted support terms.</li>
+          </ol>
+          <p>Validate onboarding by confirming that every user reaches approved applications through identity-based access rather than network-level trust, a pattern documented among <a href="#use-cases">SASE use cases</a>.</p>
+          <p>Completed onboarding establishes the operational baseline that sustains long-term SASE for MSP delivery.</p>
+        </section>
+
+        <section id="msp-challenges" class="article-block reveal">
+          <h3>What are the Challenges of Delivering SASE as an MSP?</h3>
+          <p>The challenges of delivering SASE as an MSP are the four constraints that limit how quickly a provider scales the service line.</p>
+          <p>The challenges of delivering SASE as an MSP are listed below.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Skills gap</strong> is the shortage of engineering staff trained across SD-WAN, ZTNA, SWG, CASB, and FWaaS at once. The gap slows onboarding and raises the training cost a provider absorbs before delivering SASE for MSPs at scale. Providers without certified engineers on all five converged functions rely on vendor support escalation during early deployments.</p>
+            </article>
+            <article>
+              <p><strong>Client migration resistance</strong> is the reluctance of an existing client to replace a working VPN or firewall setup with a new platform. Resistance delays contract conversion and extends the sales cycle beyond typical enterprise software timelines. Legacy contracts locked for 12 months or longer commonly postpone migration until renewal.</p>
+            </article>
+            <article>
+              <p><strong>Margin pressure</strong> is the narrowing profit spread caused by rising wholesale licensing costs or competitive underpricing among providers. Pressure forces providers to raise client counts per engineer to preserve profitability under fixed contract rates. A provider competing against larger MSSPs on price alone risks compressing margin below sustainable levels.</p>
+            </article>
+            <article>
+              <p><strong>Tenant isolation risk</strong> is the possibility of configuration or data crossover between client tenants inside a shared multi-tenant console. The risk threatens compliance obligations and client trust if the isolation controls of a platform fail. A single misconfigured policy template applied across multiple tenants can expose the traffic of one client to another.</p>
+            </article>
+          </div>
+          <p>Those four challenges shape the operational discipline a provider builds to sustain SASE for MSP delivery over the long term.</p>
+        </section>
+
+        <section id="msp-small-business" class="article-block reveal">
+          <h3>How Do MSPs Support Small Business Clients with SASE?</h3>
+          <p>Supporting small business clients with SASE is the practice of delivering enterprise-grade network and security controls to organizations without internal IT security staff, under the SASE for MSPs model.</p>
+          <p>Fully managed contracts dominate the segment, letting the provider own configuration, monitoring, and incident response end to end.</p>
+          <p>Per-seat pricing keeps the entry cost proportional to the headcount of a small client, avoiding the upfront capital expense of appliance-based deployment.</p>
+          <p>A single provider console applies the same policy templates used for larger clients, giving small businesses access to the same ZTNA and FWaaS controls without custom engineering.</p>
+          <p>Vendor-backed uptime guarantees pass through to the client contract, giving small organizations service assurances they could not negotiate independently.</p>
+          <p>The delivery model extends practical business network security to organizations that previously relied on consumer-grade routers or unmanaged firewalls.</p>
+          <p>Small business delivery under the model reinforces the SASE for MSPs framework across every client tier.</p>
+        </section>
+
+        <section id="build-sase-practice" class="article-block reveal">
+          <h3>How to Build a SASE Practice as an MSP?</h3>
+          <p>Building a SASE practice consists of 6 steps that move a provider from platform selection to a fully operational SASE service line.</p>
+          <p>To build a SASE practice as an MSP, follow the six steps listed below.</p>
+          <ol class="article-steps">
+            <li>Select a platform vendor by evaluating multi-tenant architecture, API access, and white-label options, choosing a vendor matching the target client size of the provider.</li>
+            <li>Negotiate a partnership agreement by securing wholesale licensing terms and support tiers, establishing the margin structure the provider builds pricing around.</li>
+            <li>Train engineering staff by certifying technicians across SD-WAN, ZTNA, SWG, CASB, and FWaaS, closing the skills gap before client deployment begins.</li>
+            <li>Build policy templates by creating reusable baseline configurations for common client profiles, cutting onboarding time for each new tenant.</li>
+            <li>Pilot with one client by deploying the full stack for a single organization, validating onboarding, billing, and support workflows before wider rollout.</li>
+            <li>Scale client acquisition by expanding marketing and sales toward the target client segment, using the pilot deployment as a reference case.</li>
+          </ol>
+          <p>Validate practice readiness by confirming that the pilot client operates on identity-based access with billing and reporting functioning without manual intervention.</p>
+          <p>A validated practice positions the provider to sustain long-term SASE for MSP delivery across a growing client base, an outcome that platforms like Zenarmor support for providers running enforcement on their own infrastructure rather than through a vendor cloud.</p>
+        </section>
+      </div>
+    </section>
+
+    <!-- ========================================================== SASE FOR BUSINESS ARTICLE -->
+    <section class="business section-muted" id="business" data-step="09">
+      <p class="section-kicker reveal">Business</p>
+      <div class="section-heading reveal">
+        <h2>SASE for Business:<br><em>Securing network and cloud access at scale</em></h2>
+        <p>SASE for business is a cloud-delivered architecture that combines networking and security services into a unified framework protecting users, devices, applications, and data across distributed business environments.</p>
+      </div>
+      <div class="deploy-guide article-prose">
+        <div class="article-lede reveal">
+          <p>SASE for business addresses secure connectivity, cloud access, productivity, operational costs, security posture, adoption drivers, scalability, deployment considerations, and business suitability across organizations of different sizes. Major components include Software Defined Wide Area Networking (SD-WAN), Secure Web Gateway (SWG), Cloud Access Security Broker (CASB), Firewall as a Service (FWaaS), and Zero Trust Network Access (ZTNA), creating consistent policy enforcement across branch offices, remote employees, cloud workloads, and data centers.</p>
+          <p>SASE for business supports organizations operating across multiple locations through centralized policy management instead of isolated security appliances. Gartner introduced Secure Access Service Edge in 2019 to address cloud adoption, hybrid work, and growing cybersecurity risks affecting modern enterprises. Cloud native architecture reduces dependence on traditional network perimeters by enforcing identity-based access controls close to users. Organizations evaluating business SASE solutions gain a structured foundation for understanding architecture, business value, security capabilities, financial advantages, scalability, adoption strategy, and enterprise deployment.</p>
+        </div>
+        <nav class="deploy-jump reveal" aria-label="Guide sections">
+          <a href="#what-is-sase-for-business">What is SASE for business</a>
+          <a href="#why-businesses-adopt-sase">Why businesses adopt SASE</a>
+          <a href="#sase-distributed-workforces">Distributed workforces</a>
+          <a href="#sase-multi-branch">Multi-branch businesses</a>
+          <a href="#business-network-security">Business network security</a>
+          <a href="#enterprise-network-security">Enterprise network security</a>
+          <a href="#sase-cost-benefits">Cost benefits</a>
+          <a href="#sase-business-scale">Scaling with growth</a>
+          <a href="#sase-security-posture">Security posture</a>
+          <a href="#sase-business-suitability">Business suitability</a>
+          <a href="#sase-business-case">Building a business case</a>
+          <a href="#get-started-sase-business">Getting started</a>
+        </nav>
+
+        <section id="what-is-sase-for-business" class="article-block reveal">
+          <h3>What is SASE for Business?</h3>
+          <p>SASE for business is a cloud-delivered security and networking architecture that combines secure connectivity, identity-based access control, and threat protection into a unified service for organizations operating across distributed environments.</p>
+          <p>The architecture combines SD-WAN, Secure Web Gateway, Cloud Access Security Broker, Firewall as a Service, and Zero Trust Network Access under centralized policy management.</p>
+          <p>Business operations gain consistent access control across headquarters, branch offices, cloud platforms, remote employees, and mobile devices through one security framework.</p>
+          <p>Gartner introduced the Secure Access Service Edge model in 2019 to address growing cloud adoption and changing workforce patterns.</p>
+          <p>Security policies remain consistent regardless of user location, application destination, or connection method, reducing policy fragmentation across enterprise environments.</p>
+          <p>Cloud-delivered inspection improves visibility into encrypted traffic, application usage, and user activity through centralized analytics.</p>
+          <p>Zenarmor supports organizations seeking simplified network security by delivering cloud-managed protection that aligns with modern Secure Access Service Edge principles. Cloud-based networking, identity-driven access control, and centralized policy enforcement are core capabilities delivered through modern <a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-secure-access-service-edge-sase" target="_blank" rel="noopener noreferrer">SASE Solutions</a>.</p>
+        </section>
+
+        <section id="why-businesses-adopt-sase" class="article-block reveal">
+          <h3>Why Do Businesses Adopt SASE?</h3>
+          <p>The adoption of SASE for business is driven by four factors that strengthen secure connectivity, operational performance, financial control, and cyber resilience across distributed organizations.</p>
+          <p>Each factor addresses a distinct operational requirement created by cloud adoption and hybrid work. The four adoption drivers are listed below.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Remote work</strong> shifts employees beyond corporate offices, creating demand for secure access from homes, shared workspaces, airports, and customer locations. Identity-based verification replaces location-based trust, reducing unauthorized access risks across distributed environments while strengthening business network security.</p>
+            </article>
+            <article>
+              <p><strong>Cloud migration</strong> moves business applications from local servers toward Software as a Service, Infrastructure as a Service, and public cloud platforms. Unified cloud security policies simplify access control across Microsoft Azure, Amazon Web Services, and Google Cloud environments. Centralized inspection reduces security gaps created by disconnected cloud security tools.</p>
+            </article>
+            <article>
+              <p><strong>Cost reduction</strong> lowers spending through cloud-delivered networking and security instead of maintaining numerous standalone hardware platforms. Subscription-based services reduce appliance refresh cycles, maintenance contracts, and physical deployment expenses. Organizations redirect financial resources toward strategic technology initiatives rather than legacy security maintenance.</p>
+            </article>
+            <article>
+              <p><strong>Threat consolidation</strong> combines multiple security controls into one coordinated security framework that simplifies visibility across users, devices, and applications. Centralized analytics improve incident investigation through correlated security events collected from multiple network locations. Zenarmor provides unified security capabilities that support organizations pursuing simplified protection aligned with Secure Access Service Edge principles.</p>
+            </article>
+          </div>
+          <p>Distributed business operations create additional networking demands across remote employees and branch offices, which the next section addresses.</p>
+        </section>
+
+        <section id="sase-distributed-workforces" class="article-block reveal">
+          <h3>How Does SASE Support Distributed Workforces?</h3>
+          <p>SASE support for distributed workforces is a cloud-delivered security model that delivers consistent network access and threat protection across geographically separated employees.</p>
+          <p>SASE for business applies identity-based authentication before granting application access, regardless of user location or device type.</p>
+          <p>Centralized policy management removes inconsistent security rules across headquarters, regional offices, remote workers, and mobile users.</p>
+          <p>Zero Trust Network Access replaces broad network exposure through application-specific connections that reduce attack surfaces.</p>
+          <p>Secure Web Gateway inspection filters malicious websites, phishing attempts, and unauthorized downloads before reaching endpoint devices.</p>
+          <p>Cloud Access Security Broker visibility strengthens governance across Software as a Service platforms through centralized policy enforcement.</p>
+          <p>Performance improves through traffic routing toward nearby cloud points of presence instead of directing connections through centralized corporate data centers.</p>
+          <p>Architectural differences from a VPN center on identity-based access, cloud-delivered security, and application-specific connectivity instead of traditional remote network access.</p>
+        </section>
+
+        <section id="sase-multi-branch" class="article-block reveal">
+          <h3>How Does SASE Support Multi-Branch Businesses?</h3>
+          <p>SASE support for multi-branch businesses is a centralized networking architecture that connects geographically separated offices through unified cloud-delivered security services.</p>
+          <p>SASE for business applies identical access policies across branch offices without requiring dedicated security appliances at every location.</p>
+          <p>Software-defined wide-area networking routes traffic through network paths based on latency, packet loss, and application priority.</p>
+          <p>Firewall as a Service inspects branch traffic through cloud security points instead of relying upon local hardware deployments.</p>
+          <p>Centralized administration reduces configuration inconsistencies across expanding office locations through one management console.</p>
+          <p>Unified visibility strengthens operational monitoring across retail stores, healthcare facilities, manufacturing plants, financial branches, and regional offices.</p>
+          <p>Zenarmor delivers cloud-managed security capabilities that complement organizations seeking simplified branch protection through centralized management. Organizations expanding branch connectivity frequently compare SASE and SD-WAN before selecting an architecture that aligns with networking and security objectives.</p>
+        </section>
+
+        <section id="business-network-security" class="article-block reveal">
+          <h3>How Does SASE Support Business Network Security?</h3>
+          <p>SASE support for business network security is a cloud-delivered security architecture that protects users, applications, devices, and data through centralized policy enforcement across distributed business environments.</p>
+          <p>SASE for business combines Software Defined Wide Area Networking, Secure Web Gateway, Cloud Access Security Broker, Firewall as a Service, and Zero Trust Network Access into one coordinated framework.</p>
+          <p>Identity-based verification limits application access according to authenticated users, approved devices, security posture, and organizational policies.</p>
+          <p>Continuous traffic inspection detects malware, phishing attempts, command and control communications, and unauthorized data transfers across the internet, cloud, and private applications.</p>
+          <p>Centralized management improves visibility through unified dashboards that collect security events from branch offices, remote workers, corporate campuses, and cloud platforms.</p>
+          <p>Cloud-delivered inspection reduces dependence on traditional perimeter security appliances through policy enforcement near users and workloads.</p>
+          <p>Organizations adopting business network security strengthen operational resilience through consistent protection across expanding digital environments. Enterprise-scale requirements create additional operational demands addressed next.</p>
+        </section>
+
+        <section id="enterprise-network-security" class="article-block reveal">
+          <h3>How Does SASE Support Enterprise Network Security?</h3>
+          <p>SASE support for enterprise network security is a unified cloud security framework that protects large organizations operating across multiple regions, cloud platforms, branch offices, and remote workforces.</p>
+          <p>SASE for business applies centralized security policies across thousands of users through identity-based access verification rather than network location.</p>
+          <p>Cloud native security services inspect encrypted traffic, internet connections, private applications, and Software as a Service platforms through distributed points of presence.</p>
+          <p>Unified visibility improves threat investigation through consolidated logging, analytics, reporting, and policy management across enterprise environments.</p>
+          <p>Zero Trust Network Access reduces unauthorized lateral movement by granting application-specific access instead of broad network connectivity.</p>
+          <p>Global organizations strengthen regulatory compliance through consistent policy enforcement, supporting frameworks that include ISO 27001, PCI DSS, HIPAA, and GDPR.</p>
+          <p>Identity-based access, centralized policy enforcement, and unified visibility form the foundation of modern enterprise network security.</p>
+        </section>
+
+        <section id="sase-cost-benefits" class="article-block reveal">
+          <h3>What are the Cost Benefits of SASE for Business?</h3>
+          <p>The cost benefits of SASE for business consist of three primary advantages that reduce technology spending through cloud-delivered networking and security services.</p>
+          <p>The cost benefits of SASE for business are listed below.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Hardware consolidation</strong> replaces multiple dedicated security appliances with cloud-delivered security services managed from one platform. Fewer physical devices reduce maintenance contracts, equipment refresh cycles, rack space requirements, power consumption, and branch deployment expenses. Organizations reviewing hardware firewall alternatives frequently evaluate Secure Access Service Edge before purchasing additional physical appliances.</p>
+            </article>
+            <article>
+              <p><strong>Reduced bandwidth</strong> expenses result from intelligent traffic routing that directs cloud application traffic toward nearby cloud security points instead of centralized data centers. Local internet breakout reduces unnecessary backhaul traffic across expensive private circuits. Application performance improves through shorter network paths, supporting business productivity.</p>
+            </article>
+            <article>
+              <p><strong>Lower administration</strong> results from centralized policy management that replaces manual configuration across numerous branch security platforms. Unified monitoring reduces repetitive administrative tasks through consolidated visibility, reporting, software updates, and policy enforcement. Security teams dedicate greater operational focus to threat response instead of repetitive system maintenance.</p>
+            </article>
+          </div>
+          <p>Financial efficiency strengthens long-term technology planning across expanding organizations, beginning with the hardware line examined next.</p>
+
+          <section id="sase-hardware-costs" class="article-subblock">
+            <h4>How Does SASE Reduce Hardware Costs?</h4>
+            <p>SASE reduction of hardware costs is a cloud-based approach that replaces numerous on-premises security appliances with centralized security services.</p>
+            <p>SASE for business reduces capital expenditures by shifting security functions from physical equipment toward cloud-delivered platforms.</p>
+            <p>Firewall, Secure Web Gateway, Cloud Access Security Broker, Zero Trust Network Access, and secure connectivity operate through one managed architecture instead of separate devices at branch offices.</p>
+            <p>Equipment replacement cycles decline since fewer appliances require procurement, maintenance, repairs, and lifecycle management.</p>
+            <p>Branch expansion becomes faster through cloud provisioning rather than appliance installation at new locations.</p>
+            <p>Operational expenses decline through lower power usage, cooling requirements, rack space consumption, and maintenance agreements across distributed environments.</p>
+            <p>Cloud-delivered security services reduce dependence on dedicated hardware firewall appliances across distributed business environments.</p>
+          </section>
+
+          <section id="sase-administrative-overhead" class="article-subblock">
+            <h4>How Does SASE Reduce Administrative Overhead?</h4>
+            <p>SASE reduction of administrative overhead is a centralized management model that simplifies network and security operations across distributed organizations.</p>
+            <p>SASE for business unifies policy creation, monitoring, reporting, and access management through one administrative platform.</p>
+            <p>Security teams manage users, applications, branch offices, remote employees, and cloud resources from a centralized console instead of numerous disconnected systems.</p>
+            <p>Automated policy enforcement reduces repetitive manual configuration across expanding business environments.</p>
+            <p>Centralized logging improves incident investigation through correlated security events collected across multiple locations.</p>
+            <p>Cloud-delivered software updates reduce maintenance activities associated with appliance firmware management.</p>
+            <p>Standardized security policies improve operational consistency across headquarters, regional offices, cloud workloads, and mobile users. Business expansion introduces new operational demands that require a security architecture capable of supporting continuous growth.</p>
+          </section>
+        </section>
+
+        <section id="sase-business-scale" class="article-block reveal">
+          <h3>How Does SASE Scale with Business Growth?</h3>
+          <p>SASE scaling for business growth is a cloud native capability that expands networking and security services without requiring extensive hardware deployment across growing organizations.</p>
+          <p>SASE for business supports expansion through centralized policy management that applies consistent security controls across new users, branch offices, cloud workloads, partner networks, and remote employees.</p>
+          <p>Cloud-delivered architecture reduces deployment timelines since additional locations connect through distributed cloud points of presence instead of dedicated security appliances.</p>
+          <p>Identity-based access policies maintain consistent protection regardless of organizational size or geographic distribution.</p>
+          <p>Unified visibility strengthens governance through centralized analytics, reporting, compliance monitoring, and threat detection across expanding digital operations.</p>
+          <p>Subscription-based licensing aligns operational spending with organizational growth instead of requiring major capital investments during expansion projects.</p>
+          <p>Zenarmor supports organizations seeking scalable cloud-managed security that aligns with Secure Access Service Edge adoption across growing business environments. Long-term scalability strengthens operational resilience through security improvements that extend beyond simple network expansion.</p>
+        </section>
+
+        <section id="sase-security-posture" class="article-block reveal">
+          <h3>How Does SASE Improve Security Posture for Business?</h3>
+          <p>SASE improvement of business security posture is a unified security approach that strengthens protection through centralized policy enforcement, identity verification, and continuous traffic inspection.</p>
+          <p>SASE for business combines Zero Trust Network Access, Secure Web Gateway, Firewall as a Service, Cloud Access Security Broker, and Software Defined Wide Area Networking into one coordinated security framework.</p>
+          <p>Identity-driven access verification reduces unauthorized access across users, devices, applications, and cloud services.</p>
+          <p>Continuous inspection detects malware, phishing campaigns, suspicious connections, data exfiltration attempts, and policy violations before damage spreads across business operations.</p>
+          <p>Centralized analytics improve incident visibility through consolidated event correlation across distributed environments.</p>
+          <p>Consistent security policies strengthen regulatory compliance, supporting frameworks that include ISO 27001, PCI DSS, HIPAA, and GDPR.</p>
+          <p>Organizations comparing security architectures frequently examine SASE against traditional perimeter security before selecting long-term protection strategies.</p>
+
+          <section id="sase-business-ransomware" class="article-subblock">
+            <h4>How Does SASE Protect Businesses from Ransomware?</h4>
+            <p>SASE protection against ransomware is a layered security approach that blocks malicious activity through identity verification, threat inspection, application control, and continuous policy enforcement.</p>
+            <p>SASE for business inspects internet traffic, cloud applications, encrypted sessions, and remote connections before ransomware reaches business systems.</p>
+            <p>Secure Web Gateway blocks malicious websites, phishing campaigns, and harmful downloads that distribute ransomware payloads.</p>
+            <p>Zero Trust Network Access limits lateral movement by restricting application access according to verified identity rather than unrestricted network connectivity.</p>
+            <p>Cloud Access Security Broker strengthens visibility across Software as a Service platforms through centralized governance and activity monitoring.</p>
+            <p>Unified threat intelligence improves detection of suspicious behavior across distributed environments through correlated security analytics.</p>
+            <p>Organizations evaluating ransomware defense strategies frequently examine <a href="#sase-ransomware">how SASE reduces ransomware risk</a> before strengthening enterprise cyber resilience.</p>
+          </section>
+        </section>
+
+        <section id="sase-business-suitability" class="article-block reveal">
+          <h3>Which Businesses Should Adopt SASE?</h3>
+          <p>Business suitability for SASE turns on cloud adoption, workforce distribution, and location count rather than headcount alone.</p>
+          <p>Both the sizing question and the investment question are answered below.</p>
+
+          <section id="sase-smb-suitability" class="article-subblock">
+            <h4>Is SASE Suitable for Small and Medium Businesses?</h4>
+            <p>Yes, SASE for business suits small and medium-sized organizations seeking centralized security, simplified network management, and cloud-based connectivity across distributed operations.</p>
+            <p>Subscription-based services reduce dependence on numerous physical security appliances, lowering technology management requirements.</p>
+            <p>Identity-based access control protects employees accessing business resources from offices, homes, branch locations, and mobile devices through consistent security policies.</p>
+            <p>Small organizations operating entirely from one office gain fewer advantages than organizations supporting cloud applications, remote employees, or multiple locations.</p>
+            <p>Business expansion increases operational complexity, creating stronger value from business network security built upon Secure Access Service Edge principles.</p>
+            <p>Growing adoption across small and medium businesses encourages evaluation of long-term financial returns, addressed next.</p>
+          </section>
+
+          <section id="sase-worth-investment" class="article-subblock">
+            <h4>Is SASE Worth the Investment for Business?</h4>
+            <p>Yes, SASE for business is worth the investment when organizations require secure cloud connectivity, centralized administration, scalable security, and simplified network operations across distributed environments.</p>
+            <p>Unified cloud-delivered services reduce spending associated with numerous standalone security products, maintenance contracts, and hardware replacement cycles.</p>
+            <p>Identity-driven security strengthens protection across remote users, branch offices, cloud workloads, and internet-facing applications through consistent policy enforcement.</p>
+            <p>Small organizations operating from one location with limited cloud adoption receive fewer financial advantages than geographically distributed enterprises.</p>
+            <p>Operational efficiency, stronger cyber resilience, and simplified administration support long-term business value through a modern, secure access architecture.</p>
+            <p>Organizations evaluating financial justification benefit from developing a structured adoption strategy before deployment.</p>
+          </section>
+        </section>
+
+        <section id="sase-business-case" class="article-block reveal">
+          <h3>How to Build a Business Case for SASE?</h3>
+          <p>Building a business case for SASE consists of 6 steps that align technical capabilities with measurable organizational objectives.</p>
+          <p>Build a business case for SASE by following the six steps listed below.</p>
+          <ol class="article-steps">
+            <li>Assess the current environment by documenting existing networking, security platforms, cloud services, branch offices, remote users, licensing expenses, and operational challenges. Baseline measurements establish comparison points throughout future evaluation.</li>
+            <li>Identify business objectives by defining productivity goals, security improvements, compliance requirements, operational efficiency targets, and financial expectations. Clear objectives strengthen executive decision-making through measurable business outcomes.</li>
+            <li>Calculate financial impact by comparing hardware replacement costs, software licensing, maintenance agreements, connectivity expenses, and administrative labor against projected cloud service subscriptions.</li>
+            <li>Evaluate security improvements by measuring ransomware protection, identity verification, policy consistency, threat visibility, regulatory compliance, and centralized monitoring capabilities.</li>
+            <li>Present business benefits by summarizing operational efficiency, financial savings, scalability, simplified administration, and productivity improvements using measurable business metrics.</li>
+            <li>Validate expected outcomes by comparing projected performance, security metrics, operational savings, and deployment objectives against organizational priorities before approval.</li>
+          </ol>
+          <p>The completed business case creates a structured foundation for planning a practical Secure Access Service Edge deployment.</p>
+        </section>
+
+        <section id="get-started-sase-business" class="article-block reveal">
+          <h3>How to Get Started with SASE for Business?</h3>
+          <p>Getting started with SASE for business consists of 6 steps that establish secure connectivity, centralized security management, and scalable business operations.</p>
+          <p>Get started with SASE for business by following the six steps listed below.</p>
+          <ol class="article-steps">
+            <li>Review the existing network by inventorying branch offices, internet connections, cloud platforms, remote users, security products, and business applications. Accurate assessment identifies technical requirements before migration planning.</li>
+            <li>Define security policies by establishing identity verification rules, application access permissions, device requirements, compliance controls, and threat prevention policies.</li>
+            <li>Select an appropriate platform by comparing cloud security capabilities, global service coverage, administrative features, reporting functions, scalability, and operational requirements.</li>
+            <li>Deploy incrementally by connecting lower-risk users, branch offices, or departments before expanding deployment across remaining business operations. Phased implementation simplifies validation through measurable operational results.</li>
+            <li>Monitor security performance by reviewing security alerts, application activity, policy enforcement, user experience, and network performance through centralized analytics.</li>
+            <li>Validate deployment success by confirming productivity improvements, security objectives, operational efficiency, and policy consistency through measurable business metrics.</li>
+          </ol>
+          <p>Following those six steps establishes a practical foundation for successful SASE adoption across organizations of any size, supporting the full range of <a href="#use-cases">SASE use cases</a> as the estate grows.</p>
+        </section>
+      </div>
+    </section>
+
     <!-- ========================================================== CORE ATTRIBUTES -->
-    <section class="attributes section-dark" id="attributes" data-step="08">
+    <section class="attributes section-dark" id="attributes" data-step="10">
       <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
       <span class="ambient-glow ambient-glow-b" aria-hidden="true"></span>
       <p class="section-kicker reveal">Core attributes of SASE</p>
@@ -1245,7 +1742,7 @@
     </section>
 
     <!-- ========================================================== ARCHITECTURE -->
-    <section class="architecture section-light" id="architecture" data-step="09">
+    <section class="architecture section-light" id="architecture" data-step="11">
       <p class="section-kicker reveal">SASE structure with Zenarmor</p>
       <div class="section-heading reveal">
         <h2>Thirteen architectural<br><em>decisions.</em></h2>
@@ -1480,7 +1977,7 @@
            3. Confirm what this section contributes to understanding SASE.
          Replace every [bracketed] value, then delete this comment and the
          .is-provisional class on the section. -->
-    <section class="leader section-dark is-provisional" id="leadership" data-step="10">
+    <section class="leader section-dark is-provisional" id="leadership" data-step="12">
       <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
       <div class="leader-inner reveal">
         <div class="leader-copy">
@@ -1498,7 +1995,7 @@
     </section>
 
     <!-- ========================================================== RESOURCE TABS -->
-    <section class="resources section-light" id="evaluate" data-step="11">
+    <section class="resources section-light" id="evaluate" data-step="13">
       <p class="section-kicker reveal">Evaluating a platform</p>
       <div class="section-heading reveal">
         <h2>How to evaluate<br><em>a SASE platform.</em></h2>
@@ -1570,10 +2067,9 @@
     </section>
 
     <!-- ========================================================== ARTICLE HUB -->
-    <!-- The SASE deployment guide is live in #how on this page. Remaining cards
-         stay pending until titles, standfirsts, and destinations are supplied.
-         Each card is a full <a>, so the whole card is one click/tap target. -->
-    <section class="articles section-muted" id="articles" data-step="12">
+    <!-- Five in-page guides, each card a full <a> so the whole card is one
+         click/tap target. -->
+    <section class="articles section-muted" id="articles" data-step="14">
       <p class="section-kicker reveal">Articles</p>
       <div class="section-heading reveal">
         <h2>Written for<br><em>the build.</em></h2>
@@ -1599,30 +2095,23 @@
           <p>Managed SASE is a delivery model where a provider operates, monitors, and maintains Secure Access Service Edge infrastructure on behalf of an organization.</p>
           <span class="article-more">Read the article <span aria-hidden="true">&#8595;</span></span>
         </a>
-        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
-          <span class="article-tag">[Topic]</span>
-          <h3>[Article title pending]</h3>
-          <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
-          <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
+        <a class="article-card reveal" href="#msp">
+          <span class="article-tag">Service providers</span>
+          <h3>SASE for MSPs: How Managed Service Providers Deliver SASE</h3>
+          <p>SASE for MSPs is the packaging, delivery, and monetization of Secure Access Service Edge through a managed service provider rather than direct enterprise purchase.</p>
+          <span class="article-more">Read the article <span aria-hidden="true">&#8595;</span></span>
         </a>
-        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
-          <span class="article-tag">[Topic]</span>
-          <h3>[Article title pending]</h3>
-          <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
-          <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
-          <span class="article-tag">[Topic]</span>
-          <h3>[Article title pending]</h3>
-          <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
-          <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
+        <a class="article-card reveal" href="#business">
+          <span class="article-tag">Business</span>
+          <h3>SASE for Business: Securing Network and Cloud Access at Scale</h3>
+          <p>SASE for business is a cloud-delivered architecture that combines networking and security into one framework across users, devices, applications, and data.</p>
+          <span class="article-more">Read the article <span aria-hidden="true">&#8595;</span></span>
         </a>
       </div>
-      <p class="sr-only" id="article-pending-note">Destination pending. This article is not yet published.</p>
     </section>
 
     <!-- ========================================================== INTERNAL LINKS -->
-    <section class="explore section-light" id="explore" data-step="13">
+    <section class="explore section-light" id="explore" data-step="15">
       <p class="section-kicker reveal">Continue reading</p>
       <div class="section-heading reveal">
         <h2>Go deeper<br><em>by theme.</em></h2>
@@ -1692,7 +2181,7 @@
          To go live: set a real `action`, remove the `disabled` attribute and the
          .is-provisional class, delete the notice below, and remove the
          no-endpoint branch in script.js. -->
-    <section class="newsletter section-cyan is-provisional" id="contact" data-step="14">
+    <section class="newsletter section-cyan is-provisional" id="contact" data-step="16">
       <div class="newsletter-inner reveal">
         <p class="section-kicker">Edge notes</p>
         <h2>One briefing.<br><em>Every other week.</em></h2>
