@@ -8,7 +8,11 @@
      · architecture principles are accordions, four visible until "show all"
    ========================================================================= */
 
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Motion preference is read live, not captured once at load: a visitor who
+   turns on "reduce motion" mid-session should see the page settle immediately
+   rather than having to reload. Everything below reads motionQuery.matches. */
+const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+let reducedMotion = motionQuery.matches;
 
 /* ------------------------------------------------------------- header --- */
 
@@ -59,6 +63,9 @@ document.querySelectorAll('.stat-card .info-icon').forEach((button) => {
 });
 
 document.addEventListener('click', (event) => {
+  /* Cheap guard first: this listener fires on every click on the page, so it
+     must not query the DOM unless a card is actually open. */
+  if (!document.querySelector('.stat-card.is-open')) return;
   if (event.target.closest('.stat-card')) return;
   document.querySelectorAll('.stat-card.is-open').forEach((card) => {
     card.classList.remove('is-open');
@@ -166,8 +173,13 @@ const paintBenefit = (item) => {
   if (visualCaption) visualCaption.textContent = item.dataset.caption;
 };
 
+/* Held so the motion-preference listener can redraw the current diagram when
+   the visitor flips "reduce motion" — the SMIL packets live in the markup. */
+let repaintActiveBenefit = () => {};
+
 if (benefitList) {
   const items = [...benefitList.querySelectorAll('.benefit-item')];
+  repaintActiveBenefit = () => paintBenefit(items.find((i) => i.classList.contains('is-open')) || items[0]);
   items.forEach((item) => {
     item.querySelector('button')?.addEventListener('click', () => {
       items.forEach((other) => {
@@ -268,6 +280,15 @@ document.querySelector('.newsletter-form')?.addEventListener('submit', (event) =
   const email = form.querySelector('#news-email');
   const role = form.querySelector('#news-role');
 
+  /* No endpoint is configured yet. Confirming a subscription here would be a
+     lie: the address goes nowhere. Say so plainly instead of showing success.
+     Remove the [data-no-endpoint] attribute and the fieldset's `disabled` once
+     the form posts to a real provider. */
+  if (form.hasAttribute('data-no-endpoint')) {
+    if (status) status.textContent = 'Signups are not open yet — the briefing schedule is still being confirmed.';
+    return;
+  }
+
   if (!email.value.trim() || !email.checkValidity()) {
     if (status) status.textContent = 'Enter a valid email address to subscribe.';
     email.focus();
@@ -279,22 +300,136 @@ document.querySelector('.newsletter-form')?.addEventListener('submit', (event) =
     return;
   }
 
-  if (status) status.textContent = 'You are on the list — the next Edge Notes briefing arrives by email.';
-  form.querySelector('button[type="submit"]').innerHTML = 'Subscribed <span aria-hidden="true">✓</span>';
+  /* Reached only with a real endpoint configured; let the browser submit. */
+  form.submit();
 });
 
 /* -------------------------------------------------------------- reveal --- */
 
-if (reducedMotion) {
-  document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
-} else {
-  const observer = new IntersectionObserver((entries) => {
+/* Reveals, staggered depth, and hero parallax share one rAF-batched scroll
+   pass. Everything is transform/opacity only — no layout property is animated,
+   so the compositor handles it and scrolling stays off the main thread.
+
+   Three rules hold this together:
+     · reduced motion wins immediately, and is re-evaluated live
+     · nothing is invisible without JS (see the .js-motion guard in styles.css)
+     · will-change is set while an element moves and dropped when it settles */
+
+const motionTargets = [...document.querySelectorAll('.reveal')];
+
+/* Elements that share a row reveal in sequence rather than all at once. The
+   delay is capped so a fourteen-item grid never leaves the last card waiting. */
+const STAGGER_STEP = 60;
+const STAGGER_MAX = 260;
+
+const settleAll = () => {
+  motionTargets.forEach((el) => {
+    el.classList.add('is-visible');
+    el.style.transitionDelay = '';
+    el.style.removeProperty('--reveal-shift');
+  });
+};
+
+let revealObserver = null;
+
+const startReveals = () => {
+  revealObserver = new IntersectionObserver((entries, observer) => {
+    /* Entries arrive in DOM order per batch; grouping by parent gives each row
+       its own stagger sequence instead of one delay ramp down the whole page. */
+    const byParent = new Map();
+
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
+      const key = entry.target.parentElement || document.body;
+      if (!byParent.has(key)) byParent.set(key, []);
+      byParent.get(key).push(entry.target);
       observer.unobserve(entry.target);
+    });
+
+    byParent.forEach((group) => {
+      group.forEach((el, i) => {
+        el.style.transitionDelay = `${Math.min(i * STAGGER_STEP, STAGGER_MAX)}ms`;
+        el.classList.add('is-visible');
+        /* Clear the delay once the element has arrived, so a later hover or
+           state change on the same node is not held back by a stale delay. */
+        el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
+      });
     });
   }, { threshold: .06, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
-}
+  motionTargets.forEach((el) => revealObserver.observe(el));
+};
+
+/* ------------------------------------------------------ scroll depth --- */
+
+/* Layers that drift as the page scrolls. Each declares its own rate, and the
+   background moves slowest, which is what sells the depth. Kept deliberately
+   small (the hero art moves 6% of the scrolled distance) so the parallax reads
+   as weight rather than as a moving background competing with the text. */
+const depthLayers = [
+  { el: document.querySelector('.hero-bg'), rate: 0.06 },
+  { el: document.querySelector('.hero-scroll'), rate: -0.14 }
+];
+
+let depthTicking = false;
+
+const paintDepth = () => {
+  depthTicking = false;
+  if (reducedMotion) return;
+  const y = scrollY;
+  /* Once the hero is fully scrolled past, stop writing transforms entirely. */
+  if (y > innerHeight * 1.2) return;
+  depthLayers.forEach(({ el, rate }) => {
+    if (el) el.style.transform = `translate3d(0, ${(y * rate).toFixed(2)}px, 0)`;
+  });
+};
+
+const requestDepth = () => {
+  if (depthTicking || reducedMotion) return;
+  depthTicking = true;
+  requestAnimationFrame(paintDepth);
+};
+
+/* ------------------------------------------------- motion preference --- */
+
+/* SMIL animations declared directly in the markup ignore the CSS
+   prefers-reduced-motion override, so they must be stopped on the element
+   itself. The deployment diagram's orbiting packet is the only such case. */
+const declarativeMotion = [...document.querySelectorAll('animateMotion')];
+
+const setDeclarativeMotion = (paused) => {
+  declarativeMotion.forEach((node) => {
+    /* beginElement/endElement are no-ops if SMIL is unsupported; guard anyway. */
+    if (typeof node.endElement !== 'function') return;
+    try { paused ? node.endElement() : node.beginElement(); } catch { /* no SMIL */ }
+  });
+};
+
+const applyMotionPreference = () => {
+  setDeclarativeMotion(reducedMotion);
+  if (reducedMotion) {
+    revealObserver?.disconnect();
+    revealObserver = null;
+    settleAll();
+    /* Undo any parallax already written, so nothing is left off-position. */
+    depthLayers.forEach(({ el }) => { if (el) el.style.transform = ''; });
+    removeEventListener('scroll', requestDepth);
+    return;
+  }
+  if (!revealObserver) startReveals();
+  addEventListener('scroll', requestDepth, { passive: true });
+  requestDepth();
+};
+
+/* The page ships with .reveal elements visible; this class hands control to JS
+   only once JS is running, so a failed script never hides the content. */
+document.documentElement.classList.add('js-motion');
+applyMotionPreference();
+
+motionQuery.addEventListener('change', (event) => {
+  reducedMotion = event.matches;
+  applyMotionPreference();
+  /* SMIL packets are emitted as markup, so the current diagram must be redrawn
+     to add or drop them when the preference flips mid-session. */
+  repaintActiveBenefit();
+});
