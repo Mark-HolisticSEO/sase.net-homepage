@@ -998,16 +998,37 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 .article-lede { display: grid; gap: 16px; max-width: 72ch; }
 .article-lede p { margin: 0; color: #b6cacf; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.7; }
 
-.how .deploy-guide { max-width: none; }
-.how .article-lede {
+/* In-page long-form articles (.how, .usecases, .managed) share one measure:
+   the guide itself is full-bleed, while each run of prose stays at 78ch. */
+.how .deploy-guide,
+.usecases .deploy-guide,
+.managed .deploy-guide { max-width: none; }
+.how .article-lede,
+.usecases .article-lede,
+.managed .article-lede {
   margin: 0 0 8px;
 }
-.how .article-lede p { color: var(--slate); }
-.how .article-prose { max-width: none; }
+.how .article-lede p,
+.usecases .article-lede p,
+.managed .article-lede p { color: var(--slate); }
+.how .article-prose,
+.usecases .article-prose,
+.managed .article-prose { max-width: none; }
 .how .article-block > p,
 .how .article-subblock > p,
 .how .article-items,
-.how .article-prose ol.article-steps { max-width: 78ch; }
+.how .article-table-wrap,
+.how .article-prose ol.article-steps,
+.usecases .article-block > p,
+.usecases .article-subblock > p,
+.usecases .article-items,
+.usecases .article-table-wrap,
+.usecases .article-prose ol.article-steps,
+.managed .article-block > p,
+.managed .article-subblock > p,
+.managed .article-items,
+.managed .article-table-wrap,
+.managed .article-prose ol.article-steps { max-width: 78ch; }
 
 .deploy-jump {
   display: flex; flex-wrap: wrap; gap: 10px 22px;
@@ -1127,6 +1148,42 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
   font: 500 9px var(--mono); letter-spacing: .12em;
   content: counter(step, decimal-leading-zero);
 }
+
+/* Comparison tables. The wrapper scrolls on its own so a wide table never
+   forces the page body to scroll horizontally on narrow screens. */
+.article-table-wrap {
+  margin: 8px 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.article-table {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: collapse;
+  background: var(--white);
+  border-top: 2px solid var(--ink);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.article-table th,
+.article-table td {
+  padding: 14px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-dark);
+}
+.article-table thead th {
+  color: #0f7370;
+  font: 500 9px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  border-bottom: 1px solid var(--line-dark-2);
+}
+.article-table tbody th {
+  width: 26%;
+  color: var(--ink); font-weight: 600;
+}
+.article-table tbody td { color: var(--slate); }
+.article-table tbody tr:last-child th,
+.article-table tbody tr:last-child td { border-bottom: 0; }
 
 .article-next {
   display: flex; flex-wrap: wrap; gap: 16px;
