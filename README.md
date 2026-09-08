@@ -4,7 +4,7 @@ A vendor-neutral guide to **Secure Access Service Edge (SASE)**. The site define
 
 SASE is deliberately **not** framed here as exclusively cloud-delivered. Where traffic inspection and enforcement run is an architectural choice, not part of the definition.
 
-[View the live site](https://ktg1.github.io/sase-net-site/)
+[View the live site](https://sase-net-homepage.vercel.app)
 
 The homepage is built to the wireframe in `example-homepage-zenarmor.drawio.png`, including its interaction notes.
 
@@ -37,8 +37,8 @@ There is no build step and no runtime dependency.
 Clone the repository and serve its root directory with any static file server:
 
 ```bash
-git clone https://github.com/KTG1/sase-net-site.git
-cd sase-net-site
+git clone https://github.com/Mark-HolisticSEO/sase.net-homepage.git
+cd sase.net-homepage
 python3 -m http.server 8000
 ```
 
@@ -151,11 +151,11 @@ itself remains SASE.Net. Search `index.html` for `Zenarmor` to rename them.
 
 ## Publishing
 
-The `main` branch is published with GitHub Pages. Changes pushed to `main` appear at:
+The `main` branch is published on Vercel from [Mark-HolisticSEO/sase.net-homepage](https://github.com/Mark-HolisticSEO/sase.net-homepage). Changes pushed to `main` appear at:
 
-**https://ktg1.github.io/sase-net-site/**
+**https://sase-net-homepage.vercel.app**
 
-Deployment status is available from the repository's **Actions** and **Deployments** views.
+Deployment status is available from the Vercel project dashboard.
 
 ## Content status
 
