@@ -115,7 +115,8 @@ comment block above the section.
 
 - **Video testimonials** — the video review card and its CTA were removed
   because no video testimonials exist. The section intro no longer promises
-  "two formats".
+  "two formats". The trust pair now shows a "SASE Testimonials" summary card
+  alongside the City of Nordhorn quote, in place of the removed video card.
 
 ## Calls to action
 
