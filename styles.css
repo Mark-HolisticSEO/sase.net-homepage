@@ -316,6 +316,96 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 }
 .definition-card p { margin: 0; color: var(--slate); font-size: 14.5px; line-height: 1.78; }
 
+/* ------------------------------------------------------- in-page guides --- */
+
+/* The five long-form guides sit in the landing page as an exclusive
+   accordion: collapsed rows keep the homepage short; opening one reveals
+   the article in place. Native <details> keeps the copy in the DOM for
+   crawlers and for no-JS readers. */
+main > section.guide-article {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+main > section.guide-article:has(.guide-fold[open]) {
+  padding-bottom: clamp(40px, 5vw, 88px);
+}
+main > section.guide-article[data-step]::before { top: 28px; }
+
+.guide-fold { border-top: 1px solid var(--line-dark); }
+.how.guide-article .guide-fold { border-top-color: var(--line-dark-2); }
+
+.guide-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  grid-template-areas:
+    "kicker mark"
+    "title mark"
+    "standfirst mark";
+  column-gap: 20px;
+  row-gap: 8px;
+  align-items: start;
+  padding: 26px 4px 26px 0;
+  cursor: pointer;
+  list-style: none;
+  transition: padding-left .3s var(--ease);
+}
+.guide-summary::-webkit-details-marker { display: none; }
+.guide-summary::marker { content: ""; }
+.guide-summary:hover { padding-left: 12px; }
+.guide-summary:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+.guide-kicker {
+  grid-area: kicker;
+  margin: 0;
+  color: #3d6d76;
+  font: 500 9px var(--mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.guide-title {
+  grid-area: title;
+  margin: 0;
+  font: 600 clamp(24px, 3vw, 40px)/1.05 var(--display);
+  text-transform: uppercase;
+  letter-spacing: -.03em;
+}
+.guide-standfirst {
+  grid-area: standfirst;
+  margin: 4px 0 0;
+  max-width: 68ch;
+  color: var(--slate);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.guide-mark {
+  grid-area: mark;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin-top: 22px;
+}
+.guide-mark::before,
+.guide-mark::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 14px;
+  height: 1.5px;
+  content: "";
+  background: currentColor;
+  transition: transform .3s var(--ease), opacity .3s var(--ease);
+}
+.guide-mark::after { transform: rotate(90deg); }
+.guide-fold[open] > .guide-summary { color: #0c6663; }
+.guide-fold[open] .guide-mark::after { transform: rotate(0); opacity: 0; }
+.guide-fold[open] .deploy-guide {
+  padding-top: 8px;
+  animation: panelIn .4s var(--ease) both;
+}
+
 /* ------------------------------------------------------------- articles --- */
 
 /* Article hub. Cards borrow the .explore-grid interaction (whole card is the

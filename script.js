@@ -6,6 +6,7 @@
      · benefit accordion changes the diagram and the text together
      · core attributes use a locally scrolling rail beside a sticky panel
      · architecture principles are accordions, four visible until "show all"
+     · the five long-form guides collapse into an exclusive accordion
    ========================================================================= */
 
 /* Motion preference is read live, not captured once at load: a visitor who
@@ -457,6 +458,27 @@ const revealWithin = (el) => {
   el.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
 };
 
+/* Native `name` on <details> already makes the five guides exclusive in
+   current browsers. The toggle handler is the fallback, and it marks inner
+   reveals visible so a closed article does not stay at opacity 0 after open. */
+const guideFolds = [...document.querySelectorAll('[data-guide]')];
+
+const openGuideFor = (el) => {
+  if (!el) return null;
+  const fold = el.closest('[data-guide]') || el.querySelector('[data-guide]');
+  if (fold && !fold.open) fold.open = true;
+  if (fold) revealWithin(fold);
+  return fold;
+};
+
+guideFolds.forEach((item) => {
+  item.addEventListener('toggle', () => {
+    if (!item.open) return;
+    guideFolds.forEach((other) => { if (other !== item) other.open = false; });
+    revealWithin(item);
+  });
+});
+
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 let scrollAnimation = null;
@@ -547,8 +569,10 @@ document.addEventListener('click', (event) => {
 
   event.preventDefault();
 
-  /* A <details> target (the architecture principles) is opened before the
-     measurement, so the scroll lands on the expanded height, not the summary. */
+  /* A <details> target (architecture principles or a long-form guide) is
+     opened before the measurement, so the scroll lands on the expanded
+     height, not the collapsed summary. */
+  openGuideFor(target);
   const openable = target.closest('details');
   if (openable && !openable.open) openable.open = true;
 
@@ -567,6 +591,7 @@ const scrollToHash = () => {
   if (!id) return;
   const el = document.getElementById(id);
   if (!el) return;
+  openGuideFor(el);
   const html = document.documentElement;
   const previous = html.style.scrollBehavior;
   html.style.scrollBehavior = 'auto';
@@ -587,12 +612,18 @@ fontsReady.then(() => {
 addEventListener('hashchange', () => {
   const id = decodeURIComponent(location.hash.replace(/^#/, ''));
   const el = id && document.getElementById(id);
-  if (el) scrollToElement(el);
+  if (el) {
+    openGuideFor(el);
+    scrollToElement(el);
+  }
 });
 addEventListener('popstate', () => {
   const id = decodeURIComponent(location.hash.replace(/^#/, ''));
   const el = id && document.getElementById(id);
-  if (el) scrollToElement(el);
+  if (el) {
+    openGuideFor(el);
+    scrollToElement(el);
+  }
 });
 
 motionQuery.addEventListener('change', (event) => {

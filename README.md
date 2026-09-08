@@ -73,11 +73,11 @@ spine matches the `data-step` attribute on each `<section>`.
 | 02 | Experts | Four specialists with hover biographies, then four statistics |
 | 03 | What is SASE? | Definition, what it converges, what it protects, where enforcement runs |
 | 04 | Benefits | Ten benefits; selecting one changes the diagram and the copy |
-| 05 | Deploying SASE | Full SASE deployment guide on this page: definition, models, steps, prerequisites, and challenges |
-| 06 | SASE use cases | Full SASE use case guide on this page: common use cases, remote work, branch, cloud, Zero Trust, ransomware, third-party access, Shadow IT, and industries |
-| 07 | Managed SASE | Full Managed SASE guide on this page: provider functions, SASE vs Managed SASE, Managed SASE vs MSSP, benefits, drawbacks, selection, and SLAs |
-| 08 | SASE for MSPs | Full MSP delivery guide on this page: multi-tenancy, delivery, benefits, MSP vs MSSP, platform requirements, pricing, onboarding, and building a practice |
-| 09 | SASE for business | Full business guide on this page: adoption drivers, distributed workforces, multi-branch, cost benefits, scaling, security posture, business case, and getting started |
+| 05 | Deploying SASE | Collapsed in-page guide (opens as an accordion): definition, models, steps, prerequisites, and challenges |
+| 06 | SASE use cases | Collapsed in-page guide: common use cases, remote work, branch, cloud, Zero Trust, ransomware, third-party access, Shadow IT, and industries |
+| 07 | Managed SASE | Collapsed in-page guide: provider functions, SASE vs Managed SASE, Managed SASE vs MSSP, benefits, drawbacks, selection, and SLAs |
+| 08 | SASE for MSPs | Collapsed in-page guide: multi-tenancy, delivery, benefits, MSP vs MSSP, platform requirements, pricing, onboarding, and building a practice |
+| 09 | SASE for business | Collapsed in-page guide: adoption drivers, distributed workforces, multi-branch, cost benefits, scaling, security posture, business case, and getting started |
 | 10 | Core attributes | Fourteen attributes in a locally scrolling rail |
 | 11 | Architecture | Thirteen design principles as expandable accordions |
 | 12 | Leadership | Executive quote — **attribution provisional** |
@@ -133,6 +133,7 @@ and carry a `↓` in-page arrow rather than a `↗` external one.
 - Update interactive behavior in `script.js`.
 - Swap the hero art by pointing `.hero-bg`'s `background-image` at a photograph;
   nothing else needs to change.
+- The five long-form guides (Deployment, Use cases, Managed SASE, SASE for MSPs, SASE for business) are a native exclusive `<details>` accordion. They stay collapsed on the landing page; article hub cards, nav, and hash links open the matching guide before scrolling.
 - Motion lives in `motion.js` and the `.js-motion` block of `styles.css`.
   Content is visible by default; the hidden start state applies only once JS
   confirms it is running, so a blocked script never leaves a blank page.
