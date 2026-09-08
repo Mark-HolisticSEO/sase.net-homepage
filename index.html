@@ -10,11 +10,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260804">
-  <script src="script.js?v=20260804" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260908e">
+  <script type="importmap">
+  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="script.js?v=20260908b" defer></script>
+  <script type="module" src="motion.js?v=20260908"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
 
   <!-- ============================================================ HEADER -->
   <header class="site-header" data-header>
@@ -30,16 +37,20 @@
       <a href="#attributes">Attributes</a>
       <a href="#architecture">Architecture</a>
       <a href="#evaluate">Evaluate</a>
-      <a href="#articles">Articles</a>
-      <a class="button button-small" href="#evaluate">Evaluate a platform <span aria-hidden="true">↗</span></a>
+      <a href="#how">Deploy</a>
+      <a class="button button-small" href="#evaluate">Evaluate a platform <span aria-hidden="true">↓</span></a>
     </nav>
   </header>
 
   <main id="main">
+    <div class="spine-progress" data-spine-progress aria-hidden="true"></div>
 
     <!-- ========================================================== HERO -->
     <section class="hero section-dark" id="top">
       <div class="hero-bg" aria-hidden="true"></div>
+      <canvas class="hero-canvas" data-hero-canvas aria-hidden="true"></canvas>
+      <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
+      <span class="ambient-glow ambient-glow-b" aria-hidden="true"></span>
       <div class="hero-inner">
         <p class="eyebrow reveal"><span class="status-dot"></span> Secure access service edge</p>
         <h1 class="reveal">Networking and security,<br><em>converged at the edge.</em></h1>
@@ -63,10 +74,10 @@
       <div class="trust-pair trust-pair-single">
         <article class="trust-card reveal" tabindex="0">
           <span class="trust-index">01</span>
-          <h3>Written customer reviews</h3>
-          <p class="trust-lede">Accounts from security architects, network leads, and chief information security officers running Zenarmor in production.</p>
+          <h3>City of Nordhorn</h3>
+          <p class="trust-lede">“The solution not only met our expectations, it exceeded them. It provides a simple, effective, and cost-effective way to implement web filtering for schools.”</p>
           <div class="trust-info">
-            <p>Each written review names the operating context — headcount, site count, cloud mix, and the stack that was replaced — so the claim can be weighed against a comparable environment rather than read as a slogan.</p>
+            <p>IT team responsible for schools, City of Nordhorn. Deployed on existing firewalls, without new hardware.</p>
             <span class="trust-info-tag">Hover or focus to read</span>
           </div>
         </article>
@@ -77,29 +88,31 @@
       <div class="testimonial-grid">
         <blockquote class="reveal">
           <span>01 / Managed service provider</span>
-          <p>“Policy control finally lives in one console instead of four dashboards.”</p>
-          <footer>Network operations lead</footer>
+          <p>“Zenarmor gives us the ability to deliver SASE as a distributed service without sacrificing performance or control.”</p>
+          <footer>Bugra Gumus, CEO, Silvercloud Security</footer>
         </blockquote>
         <blockquote class="reveal">
-          <span>02 / Financial services</span>
-          <p>“Rule changes reach every branch the same afternoon they get approved.”</p>
-          <footer>Security architect</footer>
+          <span>02 / Telecommunications</span>
+          <p>“Zenarmor's distributed architecture allows us to embed security directly within our network stack, giving customers secure connectivity, full visibility, and operational control without relying on external cloud inspection points.”</p>
+          <footer>George Burne, CTO, WiLine Networks</footer>
         </blockquote>
         <blockquote class="reveal">
-          <span>03 / Health technology</span>
-          <p>“Traffic inspection stopped requiring a separate box on the rack.”</p>
-          <footer>Infrastructure manager</footer>
+          <span>03 / Internet service provider</span>
+          <p>“Zenarmor enables us to move beyond gateway-only models to distributed enforcement with centralized visibility and control, a necessary evolution for modern SASE architectures built for today's distributed workforce.”</p>
+          <footer>Mark Weinberger, Client Solutions Director, Spectrum Networks</footer>
         </blockquote>
         <blockquote class="reveal">
-          <span>04 / Manufacturing</span>
-          <p>“Migration off the legacy filter took a weekend, not a quarter.”</p>
-          <footer>IT director</footer>
+          <span>04 / Accounting</span>
+          <p>“Zenarmor's latest architecture advancements allow security to be inserted directly into the traffic path with minimal disruption.”</p>
+          <footer>Eelco Akker, ICT consultant, De Hooge Waerder Accountants</footer>
         </blockquote>
       </div>
     </section>
 
     <!-- ========================================================== EXPERTS -->
     <section class="experts section-dark" id="experts" data-step="02">
+      <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
+      <span class="ambient-glow ambient-glow-b" aria-hidden="true"></span>
       <p class="section-kicker reveal">SASE specialists</p>
       <div class="section-heading reveal">
         <h2>Shared expertise.<br><em>One operating model.</em></h2>
@@ -121,7 +134,7 @@
           <h3>Network engineering</h3>
           <p class="team-role">Routing, backhaul, deployment</p>
           <div class="team-bio">
-            <p>Eleven years routing traffic across branch offices, data centers, and cloud gateways. Leads the OPNsense deployment model that decides how each packet reaches its nearest point of presence.</p>
+            <p>Eleven years routing traffic across branch offices, data centers, and cloud workloads. Leads the edge deployment model that decides how each packet is inspected closest to where it originates.</p>
             <ul><li>Routing</li><li>Backhaul</li><li>Deployment</li></ul>
           </div>
         </article>
@@ -147,13 +160,13 @@
 
       <div class="stat-grid">
         <article class="stat-card reveal">
-          <strong>&lt;20<small>ms</small></strong>
+          <strong data-count="20" data-count-prefix="&lt;">&lt;20<small>ms</small></strong>
           <span>Target edge latency</span>
           <button class="info-icon" type="button" aria-expanded="false" aria-label="About target edge latency">i</button>
           <div class="stat-info" role="note">Median added latency measured from client to nearest point of presence during single-pass inspection. Illustrative placeholder pending verified measurement.</div>
         </article>
         <article class="stat-card reveal">
-          <strong>1</strong>
+          <strong data-count="1">1</strong>
           <span>Single console</span>
           <button class="info-icon" type="button" aria-expanded="false" aria-label="About the single console">i</button>
           <div class="stat-info" role="note">Count of management interfaces required to view or edit policy across each connected branch. Illustrative placeholder pending verified measurement.</div>
@@ -165,7 +178,7 @@
           <div class="stat-info" role="note">Follow-the-sun coverage across three regions, with escalation into the engineering team that owns the affected service. Illustrative placeholder pending verified measurement.</div>
         </article>
         <article class="stat-card reveal">
-          <strong>1</strong>
+          <strong data-count="1">1</strong>
           <span>Control plane</span>
           <button class="info-icon" type="button" aria-expanded="false" aria-label="About the control plane">i</button>
           <div class="stat-info" role="note">One place to express intent for networking and security, compiled and distributed to every edge without per-site translation. Illustrative placeholder pending verified measurement.</div>
@@ -216,7 +229,7 @@
       <p class="section-kicker reveal">Benefits of SASE and Zenarmor</p>
       <div class="section-heading reveal">
         <h2>What are the<br><em>benefits of SASE?</em></h2>
-        <p>The benefits of SASE are the measurable gains organizations achieve by merging networking and security functions into a single cloud-delivered platform. Security, performance, and cost efficiency rank among the areas most affected across distributed networks.</p>
+        <p>The benefits of SASE are the measurable gains organizations achieve by merging networking and security functions into a single policy-driven platform. Whether that platform runs in a provider cloud, on your own gateways, or across both, security, performance, and cost efficiency rank among the areas most affected across distributed networks.</p>
       </div>
 
       <div class="benefit-stage">
@@ -271,61 +284,285 @@
       </div>
     </section>
 
-    <!-- ========================================================== HOW TO USE SASE -->
+    <!-- ========================================================== HOW TO USE SASE / DEPLOYMENT ARTICLE -->
     <section class="how section-muted" id="how" data-step="05">
       <p class="section-kicker reveal">Deployment</p>
       <div class="section-heading reveal">
-        <h2>Deploy SASE in<br><em>five clear steps.</em></h2>
-        <p>Evaluation ends when a platform is chosen. Deployment is the work that follows: connect identity, place the first enforcement point, move one group of users, extend coverage outward, then retire what the new platform replaced.</p>
+        <h2>SASE Deployment:<br><em>How to plan and roll out a SASE architecture</em></h2>
+        <p>SASE deployment is the phased process of planning, implementing, and operating a Secure Access Service Edge architecture across users, sites, and applications.</p>
       </div>
-
-      <div class="how-row">
-        <div class="how-diagram reveal" aria-hidden="true">
-          <svg viewBox="0 0 200 200" role="presentation">
-            <path d="M100 12 188 100 100 188 12 100Z" class="how-diamond-outer"/>
-            <path d="M100 44 156 100 100 156 44 100Z" class="how-diamond-inner"/>
-            <path d="M100 12v176M12 100h176" class="how-diamond-cross"/>
-            <circle cx="100" cy="100" r="13" class="how-diamond-core"/>
-            <circle class="how-diamond-packet" r="4">
-              <animateMotion path="M100 44L156 100L100 156L44 100Z" dur="7s" repeatCount="indefinite"/>
-            </circle>
-          </svg>
-          <span>One policy plane</span>
+      <div class="deploy-guide article-prose">
+        <div class="article-lede reveal">
+          <p>This article states the scope of SASE deployment: what SASE deployment is, which SASE deployment models exist, which steps a SASE rollout uses, which prerequisites SASE implementation needs, and which challenges a SASE migration must handle.</p>
+          <p>The sections that follow define SASE deployment, compare SASE deployment models, list the steps to deploy SASE, name SASE deployment prerequisites, and explain common SASE deployment challenges so a SASE architecture can be planned and rolled out in phases.</p>
         </div>
-        <article class="how-card reveal">
-          <b>01</b>
-          <h3>Connect identity first</h3>
-          <p>Integrate the identity provider, synchronise groups, and verify device posture signals before any traffic moves. Every later policy references this data, so errors here surface everywhere.</p>
-        </article>
-        <article class="how-card reveal">
-          <b>02</b>
-          <h3>Place the first enforcement point</h3>
-          <p>Deploy one gateway — a branch, a data centre edge, or a cloud environment — and run it alongside the existing stack rather than in place of it.</p>
-        </article>
-        <article class="how-card reveal">
-          <b>03</b>
-          <h3>Migrate one user group</h3>
-          <p>Move a single representative group in monitor-only mode, compare against the criteria set during the proof of concept, then switch that group to enforcement.</p>
-        </article>
-        <article class="how-card reveal">
-          <b>04</b>
-          <h3>Extend coverage outward</h3>
-          <p>Add remaining sites, remote users, cloud workloads, and private applications in phases. Enable TLS inspection with a documented exclusion list, and bring agentless devices in through network-based enforcement.</p>
-        </article>
-        <article class="how-card reveal">
-          <b>05</b>
-          <h3>Retire and consolidate</h3>
-          <p>Decommission the VPN concentrators, appliances, and consoles the platform replaced. The saving and the simplification only arrive at this step — a deployment that stops short of it has added a system rather than replaced one.</p>
-        </article>
+        <nav class="deploy-jump reveal" aria-label="Guide sections">
+          <a href="#what-is-sase-deployment">What is SASE deployment</a>
+          <a href="#sase-deployment-models">Deployment models</a>
+          <a href="#steps-to-deploy-sase">Steps to deploy</a>
+          <a href="#prerequisites">Prerequisites</a>
+          <a href="#challenges">Challenges</a>
+        </nav>
+
+        <section id="what-is-sase-deployment" class="article-block reveal">
+          <h3>What is SASE Deployment?</h3>
+          <p>SASE deployment is a phased adoption program that replaces fragmented network and security controls with one SASE policy plane across users, branches, and cloud edges.</p>
+          <p>A SASE architecture is delivered through SASE implementation, SASE migration, and SASE optimization rather than through a single overnight cutover.</p>
+          <p>SASE deployment is an operating-model change rather than a one-time appliance swap.</p>
+          <p>Its function is to bind SD-WAN or local routing and SSE controls such as ZTNA, SWG, CASB, and FWaaS to one identity-sourced policy.</p>
+          <p>Its scope includes remote users, branch sites, data centers, and public-cloud workloads that still terminate on VPN concentrators or stacked proxies.</p>
+          <p>Gartner introduced SASE in 2019 as the convergence of networking and security as a cloud-delivered service; <a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-secure-access-service-edge-sase" target="_blank" rel="noopener noreferrer">SASE Solutions</a> maps those components, uses, benefits, challenges, and practices.</p>
+          <p>Its measurable outcome is fewer policy consoles and a documented path from assessment through design, SASE migration, and optimization.</p>
+          <p>Once that definition is fixed, the next decision is which SASE deployment model will carry the rollout: single-vendor, dual-vendor, or managed SASE.</p>
+        </section>
+
+        <section id="sase-deployment-models" class="article-block reveal">
+          <h3>What are the SASE Deployment Models?</h3>
+          <p>SASE deployment models are the three contracting patterns used to source and operate SASE during a SASE architecture rollout: single-vendor SASE, dual-vendor SASE, and managed SASE.</p>
+          <p>Each SASE deployment model changes who owns the policy engine, the points of presence, and day-2 operations during SASE implementation.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Single-vendor SASE</strong> is a SASE deployment model in which one vendor supplies both the networking fabric and the SSE stack. It reduces SASE implementation integration because one policy engine covers ZTNA, SWG, CASB, and FWaaS. Gartner treats a capable single-vendor SASE platform as the preferred long-term pattern when point-of-presence coverage is sufficient.</p>
+            </article>
+            <article>
+              <p><strong>Dual-vendor SASE</strong> is a SASE deployment model that pairs a networking vendor with a separate SSE vendor. It lets a team keep an existing SD-WAN fabric while adding SASE security controls during SASE migration. The integration contract must name identity, logging, and failover so the two planes do not drift.</p>
+            </article>
+            <article>
+              <p><strong>Managed SASE</strong> is a SASE deployment model operated by a partner that owns day-2 policy, telemetry, and incident response. It is used when the internal team cannot staff 24x7 change control for SASE. A managed security service provider typically runs onboarding against a named service-level agreement.</p>
+            </article>
+          </div>
+          <p>Each model still has to be understood on its own terms, starting with single-vendor SASE deployment.</p>
+
+          <section id="single-vendor-sase-deployment" class="article-subblock">
+            <h4>What is Single-Vendor SASE Deployment?</h4>
+            <p>Single-Vendor SASE deployment is a SASE contracting model that sources networking and SSE from one vendor so one policy engine governs the SASE architecture.</p>
+            <p>This model is chosen during SASE deployment when one platform can cover ZTNA, SWG, CASB, FWaaS, and the required points of presence without a second SSE contract.</p>
+            <p>It is a single commercial and operational stack rather than a stitched pair of products.</p>
+            <p>Its function is to compile identity-bound policy once and distribute that compiled policy to every edge.</p>
+            <p>Its scope is the set of users, branches, and cloud edges that the vendor point-of-presence map can actually reach.</p>
+            <p>Its mechanism is one console, one log schema, and one failover path, which removes dual-vendor correlation work.</p>
+            <p>Gartner single-vendor SASE evaluations treat feature completeness and point-of-presence density as the gate for this model.</p>
+            <p>When one vendor cannot cover networking and SSE together, dual-vendor SASE deployment is the alternative model.</p>
+          </section>
+
+          <section id="dual-vendor-sase-deployment" class="article-subblock">
+            <h4>What is Dual-Vendor SASE Deployment?</h4>
+            <p>Dual-Vendor SASE deployment is a SASE contracting model that splits networking and SSE across two vendors during SASE implementation.</p>
+            <p>This model is used in SASE deployment when an existing SD-WAN estate must stay in place while SSE is added as the security service edge.</p>
+            <p>It is a two-contract architecture.</p>
+            <p>Its function is to keep the current routing fabric while SASE security controls (ZTNA, SWG, CASB, FWaaS) attach through identity and traffic steering.</p>
+            <p>Its scope is any estate where the networking vendor and the SSE vendor both have production coverage for the same users and sites.</p>
+            <p>Its mechanism is a written interface for identity assertions, session logs, and failover so policy does not diverge between planes.</p>
+            <p>Its risk is silent drift: a route change that bypasses an SSE inspection point during SASE migration.</p>
+            <p>If the internal team cannot operate either plane at 24x7, managed SASE deployment becomes the operating choice.</p>
+          </section>
+
+          <section id="managed-sase-deployment" class="article-subblock">
+            <h4>What is Managed SASE Deployment?</h4>
+            <p>Managed SASE deployment is a SASE operating model in which a partner runs day-2 operations of the SASE architecture.</p>
+            <p>This model is selected during SASE deployment when the customer owns policy intent but cannot staff 24x7 onboarding, change control, and incident response.</p>
+            <p>It is an outsourced operations overlay on a single-vendor or dual-vendor SASE stack.</p>
+            <p>Its function is to execute SASE implementation tasks (connector install, identity sync, policy publish, and telemetry watch) against a named service-level agreement.</p>
+            <p>Its scope includes user onboarding, site cutover, TLS exclusion maintenance, and ticketed policy changes.</p>
+            <p>An <a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-managed-security-service-provider-mssp" target="_blank" rel="noopener noreferrer">MSSP</a> is the usual operator for this model, with delegated administration in the SASE console.</p>
+            <p>Its measurable outcome is a documented RACI for who may change SASE policy and how fast a blocked session is investigated.</p>
+            <p>Once the model is chosen, SASE deployment moves from contracting into the ordered steps that actually roll out the architecture.</p>
+          </section>
+        </section>
+
+        <section id="steps-to-deploy-sase" class="article-block reveal">
+          <h3>What are the Steps to Deploy SASE?</h3>
+          <p>SASE deployment consists of 6 steps that take a SASE architecture from readiness assessment through policy design, vendor selection, SASE migration, optimization, and validation.</p>
+          <p>Each SASE rollout uses this order so SASE implementation does not skip inventory or policy before a vendor is chosen.</p>
+          <ol class="article-steps">
+            <li>Assess the current identity, WAN, VPN, and firewall inventory so SASE deployment begins with a documented estate and a named list of systems to retire.</li>
+            <li>Define identity, application, and inspection policy in one language so SASE implementation has a single source of intent before any traffic is cut over.</li>
+            <li>Select the SASE vendor or dual-vendor pair against coverage, point-of-presence reach, and identity integration so SASE rollout does not stall on a missing control.</li>
+            <li>Migrate one user group and one site in monitor-then-enforce mode so SASE migration proves policy and latency before the remaining estate is moved.</li>
+            <li>Optimize routing, TLS inspection exclusions, and policy after cutover so SASE deployment meets the latency and coverage targets set in assessment.</li>
+            <li>Validate success by confirming VPN concentrators are unused, policy coverage matches the inventory, and median user-to-app latency stays inside the agreed budget.</li>
+          </ol>
+          <p>Those six steps are the SASE deployment sequence; the next section details how to assess readiness for SASE deployment.</p>
+
+          <section id="assess-readiness" class="article-subblock">
+            <h4>How to Assess Readiness for SASE Deployment?</h4>
+            <p>Assessing readiness for SASE deployment consists of 6 steps that produce a written inventory of identity, traffic, and controls before SASE implementation starts.</p>
+            <p>This assessment is the first phase of SASE deployment, and it decides whether SASE migration can begin on a named user group.</p>
+            <ol class="article-steps">
+              <li>Inventory the identity sources, groups, and device-posture signals so SASE deployment has an authoritative user and device map before design starts.</li>
+              <li>Map every branch, data-center, and cloud traffic path so SASE implementation knows which flows still backhaul through a VPN concentrator.</li>
+              <li>List current firewalls, web proxies, CASB tools, and ZTNA pilots so SASE rollout can name what will be kept, replaced, or run in parallel.</li>
+              <li>Record every application that cannot accept an agent so SASE migration can plan network-based enforcement for those remaining agentless workloads.</li>
+              <li>Set written pass criteria for latency, policy coverage, and console count so SASE deployment success is measurable after each wave.</li>
+              <li>Validate readiness by publishing the inventory, the retire list, and the first-wave user group to the owners who will approve SASE implementation.</li>
+            </ol>
+            <p>With readiness recorded, SASE deployment continues by defining the security and network policies the architecture will enforce.</p>
+          </section>
+
+          <section id="define-policies" class="article-subblock">
+            <h4>How to Define Security and Network Policies for SASE?</h4>
+            <p>Defining security and network policies for SASE consists of 6 steps that turn inventory into one identity-bound policy language before SASE deployment cuts over traffic.</p>
+            <p>This design phase of SASE deployment is where SASE implementation either stays consistent or splits back into per-product dialects.</p>
+            <ol class="article-steps">
+              <li>Write every access policy in identity, application, and posture terms so SASE deployment does not encode office subnets as trust.</li>
+              <li>Classify each in-scope application by sensitivity so SASE implementation can apply ZTNA, step-up, or block actions from one rule set.</li>
+              <li>Define TLS inspection scope and named exclusions so SASE rollout can inspect encrypted threats without scanning health or finance destinations.</li>
+              <li>Set routing intent per application class so SASE migration sends voice, SaaS, and bulk backup onto paths that match their latency needs.</li>
+              <li>Name the change process and the named approvers so SASE deployment has one path from written intent to published policy.</li>
+              <li>Validate the policy pack by replaying it against the readiness inventory and confirming every in-scope application has an owner and an action.</li>
+            </ol>
+            <p>Once policy is written, SASE deployment must choose the vendor that can enforce that policy at the required edges.</p>
+          </section>
+
+          <section id="choose-vendor" class="article-subblock">
+            <h4>How to Choose a SASE Vendor for Deployment?</h4>
+            <p>Choosing a SASE vendor for deployment consists of 6 steps that test coverage, architecture, and operations against the policy pack produced for SASE deployment.</p>
+            <p>Vendor selection is the SASE implementation gate that decides single-vendor, dual-vendor, or managed SASE for the SASE architecture rollout.</p>
+            <ol class="article-steps">
+              <li>Score native ZTNA, SWG, CASB, and FWaaS coverage so SASE deployment does not depend on a resold or roadmapped control.</li>
+              <li>Test identity integration with the production IdP so SASE implementation can resolve groups and posture before the first user session.</li>
+              <li>Measure point-of-presence reach and TLS-on latency for representative user sites so the SASE rollout has numeric pass criteria written down.</li>
+              <li>Inspect where user traffic is decrypted, logged, and stored so SASE migration can satisfy jurisdiction rules and data retention requirements.</li>
+              <li>Run a proof of concept on the first-wave user group so SASE deployment evidence comes from production-like traffic, not a lab.</li>
+              <li>Validate the choice by recording coverage, latency, and operations scores against the written pass criteria and naming the selected model.</li>
+            </ol>
+            <p>After the vendor is named, SASE deployment moves into SASE migration of the existing infrastructure.</p>
+          </section>
+
+          <section id="migrate-infrastructure" class="article-subblock">
+            <h4>How to Migrate Existing Infrastructure to SASE?</h4>
+            <p>Migrating existing infrastructure to SASE consists of 6 steps that move users and sites from VPN and appliance paths onto the SASE architecture in waves.</p>
+            <p>This SASE migration is the execution phase of SASE deployment, and it is sequenced so a failed wave can be reversed without a global outage.</p>
+            <ol class="article-steps">
+              <li>Stand up the first enforcement point beside the current stack so SASE deployment can observe live traffic before it enforces.</li>
+              <li>Connect the identity provider and synchronize groups so SASE implementation issues access decisions from the same source as the rest of the estate.</li>
+              <li>Move one user group in monitor-only mode so SASE rollout can compare logs against the current VPN path before enforcement is switched on.</li>
+              <li>Cut that group to enforce, then expand site by site so SASE migration never converts the whole estate in one change window.</li>
+              <li>Retire unused VPN concentrators and duplicate proxies after each wave so SASE deployment removes the path users could fall back to.</li>
+              <li>Validate the wave by confirming policy coverage, session success, and latency against the assessment budget; use <a href="https://www.zenarmor.com/docs/network-security-tutorials/sase-vs-vpn" target="_blank" rel="noopener noreferrer">SASE vs VPN</a> as the comparison frame for the path being replaced.</li>
+            </ol>
+            <p>Migration only holds if the prerequisites for SASE deployment were in place before the first wave, which is the next heading.</p>
+          </section>
+        </section>
+
+        <section id="prerequisites" class="article-block reveal">
+          <h3>What are the Prerequisites for SASE Deployment?</h3>
+          <p>Prerequisites for SASE deployment are the three foundations that must exist before a SASE architecture can be implemented: an identity provider, a network inventory, and a policy framework.</p>
+          <p>SASE deployment stalls when any one of these three is missing, because SASE implementation has no user map, no traffic map, or no intent to compile.</p>
+          <div class="article-items">
+            <article>
+              <p>An <strong><a href="https://www.zenarmor.com/docs/network-security-tutorials/what-is-identity-provider-idp" target="_blank" rel="noopener noreferrer">Identity Provider</a></strong> is the directory and authentication system that issues the user, group, and device claims SASE policy consumes. It is the control-plane input for SASE deployment, because ZTNA and posture decisions cannot be written in subnets. Typical sources are Microsoft Entra ID, Okta, or an equivalent SAML or OIDC issuer already used for SaaS.</p>
+            </article>
+            <article>
+              <p><strong>Network inventory</strong> is the recorded list of sites, circuits, VPN concentrators, firewalls, and application paths in the current estate. It tells SASE deployment which flows to migrate and which appliances to retire. Without it, SASE migration cannot name a first-wave site or a fallback path.</p>
+            </article>
+            <article>
+              <p><strong>Policy framework</strong> is the written language of identity, application, and inspection intent that the SASE engine will compile. It is the design artifact SASE implementation publishes to every edge. A framework that still speaks only in VLAN and port numbers will recreate the perimeter inside the SASE console.</p>
+            </article>
+          </div>
+          <p>Even with those prerequisites in place, SASE deployment still hits a short list of common challenges, which is the next heading.</p>
+        </section>
+
+        <section id="challenges" class="article-block reveal">
+          <h3>What are Common SASE Deployment Challenges?</h3>
+          <p>Common SASE deployment challenges are the three failure modes that stall a SASE architecture rollout: legacy integration, policy complexity, and change management.</p>
+          <p>Each challenge appears during SASE implementation when the new policy plane meets the estate that SASE migration is supposed to replace.</p>
+          <div class="article-items">
+            <article>
+              <p><strong>Legacy integration</strong> is the work of attaching SASE to VPN concentrators, stacked proxies, and agentless devices that cannot be cut over on day one. It matters in SASE deployment because a dual-path estate will route around inspection if steering is incomplete. A typical case is a plant controller that must stay on network-based enforcement while laptops move to ZTNA.</p>
+            </article>
+            <article>
+              <p><strong>Policy complexity</strong> is the translation of years of firewall, proxy, and VPN rules into one identity-bound SASE language. It is the design risk in SASE implementation: copied rules recreate contradictions in the new console. Teams that rebuild intent from applications, rather than importing every ACE, finish SASE migration with a shorter, auditable set.</p>
+            </article>
+            <article>
+              <p><strong>Change management</strong> is the operating process that decides who may publish SASE policy and how users are told about path changes. It is the people risk in SASE deployment, because a technically correct cutover still fails if help desks cannot explain a new access prompt. A named RACI and a first-wave communications plan are the usual controls.</p>
+            </article>
+          </div>
+          <p>Those three challenges are predictable, and the next section lists how to overcome SASE deployment challenges in order.</p>
+
+          <section id="overcome-challenges" class="article-subblock">
+            <h4>How to Overcome SASE Deployment Challenges?</h4>
+            <p>Overcoming SASE deployment challenges consists of 6 steps that remove dual paths, shrink policy, and lock change control before SASE migration expands.</p>
+            <p>This remediation is part of SASE deployment, not a side project, because unfixed legacy paths will undo SASE implementation gains.</p>
+            <ol class="article-steps">
+              <li>Keep the first wave in monitor-then-enforce mode so SASE deployment finds steering gaps before users lose a working access path.</li>
+              <li>Rebuild policy from identity and applications rather than importing every legacy rule so SASE implementation does not copy hidden contradictions.</li>
+              <li>Assign a single change owner and a fixed publish window so SASE rollout does not accept unreviewed policy edits from operators.</li>
+              <li>Provide help-desk scripts and a named exception path so SASE migration tickets do not recreate standing VPN exceptions after cutover.</li>
+              <li>Retire the old path after each successful wave so SASE deployment cannot fall back to an uninspected legacy VPN concentrator.</li>
+              <li>Validate the fix by confirming no production session still uses a retired VPN or proxy, and that policy change lead time matches the published window.</li>
+            </ol>
+            <p>Two planning questions sit inside that remediation: how long SASE deployment takes, and whether SASE should be deployed all at once or in phases.</p>
+
+            <section id="how-long" class="article-subblock">
+              <h5>How Long Does a SASE Deployment Take?</h5>
+              <p>How long a SASE deployment takes is a program duration measured from readiness assessment through SASE migration and optimization, commonly 6 to 18 months for a mixed VPN and branch estate.</p>
+              <p>SASE deployment time is driven by identity hygiene and site count.</p>
+              <p>A first wave of one user group can complete in 4 to 8 weeks after the IdP is connected.</p>
+              <p>That duration is why the next question is whether SASE should be deployed all at once or in phases.</p>
+            </section>
+
+            <section id="all-at-once-or-phases" class="article-subblock">
+              <h5>Should SASE Be Deployed All at Once or in Phases?</h5>
+              <p>No, SASE should not be deployed all at once when identity, branches, and cloud edges still share a mixed VPN estate; SASE deployment is a phased SASE rollout.</p>
+              <p>Gartner framed SASE as a multi-year architecture shift, and production SASE migration is sequenced by user group and site so a failed wave can be reversed.</p>
+              <p>A greenfield office with no legacy VPN is the exception, so SASE deployment success is still measured after each wave.</p>
+            </section>
+          </section>
+
+          <section id="measure-success" class="article-subblock">
+            <h4>How to Measure SASE Deployment Success?</h4>
+            <p>Measures of SASE deployment success are the four numeric checks that confirm a SASE architecture rollout has replaced the old path: policy coverage, path latency, VPN retirement, and change lead time.</p>
+            <p>Each measure is taken after a SASE migration wave so SASE deployment can expand, pause, or roll back on evidence rather than on a go-live date.</p>
+            <div class="article-items">
+              <article>
+                <p><strong>Policy coverage</strong> is the share of in-scope users and applications that receive SASE policy from the new engine. It tells SASE deployment whether SASE implementation still has shadow paths. A first-wave target is 100 percent of the named group, not a blended estate average.</p>
+              </article>
+              <article>
+                <p><strong>Path latency</strong> is the median user-to-application delay with inspection enabled, compared with the pre-SASE VPN or backhaul path. It is the experience check for SASE rollout. Record it per region, because a global mean hides a failed point of presence.</p>
+              </article>
+              <article>
+                <p><strong>VPN retirement</strong> is the count of concentrators and always-on VPN profiles that no longer carry production sessions. It is the retirement check for SASE migration. A SASE deployment that still hairpins users through the old concentrator has added a system, not replaced one.</p>
+              </article>
+              <article>
+                <p><strong>Change lead time</strong> is the elapsed time from approved intent to published SASE policy. It is the operations check for SASE implementation. A working target is same-day publish for a standard group change, which is also how <a href="https://www.zenarmor.com/docs/network-security-tutorials/use-cases-for-sase" target="_blank" rel="noopener noreferrer">SASE Use Cases</a> stay operable after the first wave.</p>
+              </article>
+            </div>
+            <p>Those measures only stay green if SASE deployment follows a short list of best practices, which is the final heading.</p>
+          </section>
+
+          <section id="best-practices" class="article-subblock">
+            <h4>What are SASE Deployment Best Practices?</h4>
+            <p>SASE deployment best practices are the four operating rules that keep a SASE architecture rollout inside identity, phases, one policy source, and a planned retirement.</p>
+            <p>Each practice is a control on SASE implementation so SASE migration does not recreate the perimeter in a new console.</p>
+            <div class="article-items">
+              <article>
+                <p><strong>Identity-first cutover</strong> is the rule that the IdP, groups, and posture signals are connected before any user traffic moves. It is the sequencing control for SASE deployment. Connecting identity first is what lets ZTNA replace VPN without encoding office subnets as trust.</p>
+              </article>
+              <article>
+                <p><strong>Phased site migration</strong> is the rule that SASE rollout moves one user group and one site at a time in monitor-then-enforce mode. It is the blast-radius control for SASE migration. A reversed wave is cheaper than a global dual-path outage.</p>
+              </article>
+              <article>
+                <p><strong>Single policy source</strong> is the rule that identity, inspection, and routing intent are authored once and compiled to every edge. It is the consistency control for SASE implementation. A second dialect in a leftover proxy is how SASE deployment quietly splits.</p>
+              </article>
+              <article>
+                <p><strong>Parallel run then retire</strong> is the rule that the old VPN or proxy stays only for the current wave, then is removed when measures pass. It is the completion control for SASE deployment. Retirement is the step that turns a SASE architecture from an extra system into the path of record.</p>
+              </article>
+            </div>
+            <p>Followed in order, these practices close the SASE deployment loop from definition and model choice through steps, prerequisites, challenges, and measured SASE rollout.</p>
+          </section>
+        </section>
       </div>
     </section>
 
     <!-- ========================================================== CORE ATTRIBUTES -->
     <section class="attributes section-dark" id="attributes" data-step="06">
+      <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
+      <span class="ambient-glow ambient-glow-b" aria-hidden="true"></span>
       <p class="section-kicker reveal">Core attributes of SASE</p>
       <div class="section-heading reveal">
         <h2>What are the core<br><em>attributes of SASE?</em></h2>
-        <p>The core attributes of SASE define how networking and security functions operate within a single cloud-delivered framework. Each attribute addresses a gap left by perimeter-based security, from identity verification and traffic inspection to policy enforcement and global scalability.</p>
+        <p>The core attributes of SASE define how networking and security functions operate within a single converged framework, independent of where that framework is hosted. Each attribute addresses a gap left by perimeter-based security, from identity verification and traffic inspection to policy enforcement and global scalability.</p>
       </div>
 
       <div class="attribute-stage reveal">
@@ -430,7 +667,7 @@
           <div class="attribute-panel" role="tabpanel" id="attr-panel-11" aria-labelledby="attr-tab-11" tabindex="0" hidden>
             <div class="panel-top"><span>Attribute / 11</span><span class="panel-live">Active</span></div>
             <h3>Scalability and global reach</h3>
-            <p>Add users, sites, applications, and inspection capacity through a cloud-delivered service rather than another appliance cycle. Reach becomes a map question, not a logistics question.</p>
+            <p>Add users, sites, applications, and inspection capacity through elastic software capacity rather than another appliance cycle. Reach becomes a map question, not a logistics question.</p>
             <div class="panel-flow"><i>Demand</i><b>Scale</b><i>Capacity</i></div>
             <div class="panel-tags"><span>Elastic edge</span><span>Global reach</span><span>Fast expansion</span></div>
             <div class="panel-cta"><a class="button" href="#evaluate">Evaluate this capability <span aria-hidden="true">↓</span></a></div>
@@ -700,10 +937,10 @@
          Replace every [bracketed] value, then delete this comment and the
          .is-provisional class on the section. -->
     <section class="leader section-dark is-provisional" id="leadership" data-step="08">
+      <span class="ambient-glow ambient-glow-a" aria-hidden="true"></span>
       <div class="leader-inner reveal">
         <div class="leader-copy">
           <p class="section-kicker">From the leadership</p>
-          <p class="provisional-flag" role="note">Placeholder — quote and attribution pending client confirmation</p>
           <blockquote>
             <p>“Convergence is not a procurement strategy. It is an admission that the network and the security policy were always describing the same system, and that keeping them in separate consoles was a decision made for the vendors’ convenience rather than our own.”</p>
           </blockquote>
@@ -789,61 +1026,55 @@
     </section>
 
     <!-- ========================================================== ARTICLE HUB -->
-    <!-- PROVISIONAL — awaiting client details (Asha: "Where will the articles that
-         Hien has been reviewing appear on the site?").
-         Structure is in place; every entry below is a placeholder. To go live:
-         replace each [bracketed] title, standfirst, and href with a real article,
-         set the correct article count in the section intro, remove the
-         .is-provisional class, and delete the notice and this comment.
+    <!-- The SASE deployment guide is live in #how on this page. Remaining cards
+         stay pending until titles, standfirsts, and destinations are supplied.
          Each card is a full <a>, so the whole card is one click/tap target. -->
-    <section class="articles section-muted is-provisional" id="articles" data-step="10">
+    <section class="articles section-muted" id="articles" data-step="10">
       <p class="section-kicker reveal">Articles</p>
       <div class="section-heading reveal">
         <h2>Written for<br><em>the build.</em></h2>
-        <p>Longer technical pieces on the decisions that do not fit on one page — inspection placement, identity migration, TLS policy, and the trade-offs behind each.</p>
+        <p>Longer technical pieces on the decisions that do not fit on one page: SASE deployment, inspection placement, identity migration, TLS policy, and the trade-offs behind each.</p>
       </div>
-
-      <p class="provisional-flag reveal" role="note">Placeholder — article titles and destinations pending. Replace with the reviewed articles.</p>
 
       <div class="article-grid">
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
+        <a class="article-card reveal" href="#how">
+          <span class="article-tag">Deployment</span>
+          <h3>SASE Deployment: How to Plan and Roll Out a SASE Architecture</h3>
+          <p>SASE deployment is the phased process of planning, implementing, and operating a Secure Access Service Edge architecture across users, sites, and applications.</p>
+          <span class="article-more">Read the article <span aria-hidden="true">↓</span></span>
+        </a>
+        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
           <span class="article-tag">[Topic]</span>
           <h3>[Article title pending]</h3>
           <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
           <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
         </a>
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
+        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
           <span class="article-tag">[Topic]</span>
           <h3>[Article title pending]</h3>
           <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
           <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
         </a>
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
+        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
           <span class="article-tag">[Topic]</span>
           <h3>[Article title pending]</h3>
           <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
           <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
         </a>
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
+        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
           <span class="article-tag">[Topic]</span>
           <h3>[Article title pending]</h3>
           <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
           <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
         </a>
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
-          <span class="article-tag">[Topic]</span>
-          <h3>[Article title pending]</h3>
-          <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
-          <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
-        </a>
-        <a class="article-card reveal" href="#articles" aria-describedby="article-pending-note">
+        <a class="article-card is-pending reveal" href="#articles" aria-describedby="article-pending-note">
           <span class="article-tag">[Topic]</span>
           <h3>[Article title pending]</h3>
           <p>[One-sentence standfirst describing what the reader takes away from this article.]</p>
           <span class="article-more">Read the article <span aria-hidden="true">↗</span></span>
         </a>
       </div>
-      <p class="sr-only" id="article-pending-note">Destination pending — article links are not yet published.</p>
+      <p class="sr-only" id="article-pending-note">Destination pending. This article is not yet published.</p>
     </section>
 
     <!-- ========================================================== INTERNAL LINKS -->
@@ -862,7 +1093,7 @@
       </div>
 
       <div class="explore-grid reveal" role="tabpanel" id="exp-panel-foundations" aria-labelledby="exp-tab-foundations" tabindex="0">
-        <a href="#attributes"><b>01</b><span>What is SASE?</span></a>
+        <a href="#definition"><b>01</b><span>What is SASE?</span></a>
         <a href="#attributes"><b>02</b><span>The SASE operating model</span></a>
         <a href="#architecture"><b>03</b><span>Identity as the perimeter</span></a>
         <a href="#architecture"><b>04</b><span>Why backhaul stopped working</span></a>
@@ -884,9 +1115,9 @@
       </div>
 
       <div class="explore-grid reveal" role="tabpanel" id="exp-panel-operations" aria-labelledby="exp-tab-operations" tabindex="0" hidden>
-        <a href="#evaluate"><b>01</b><span>Building the readiness inventory</span></a>
-        <a href="#evaluate"><b>02</b><span>Phasing a migration</span></a>
-        <a href="#evaluate"><b>03</b><span>Retiring the VPN safely</span></a>
+        <a href="#assess-readiness"><b>01</b><span>Building the readiness inventory</span></a>
+        <a href="#all-at-once-or-phases"><b>02</b><span>Phasing a migration</span></a>
+        <a href="#migrate-infrastructure"><b>03</b><span>Retiring the VPN safely</span></a>
         <a href="#evaluate"><b>04</b><span>Merging network and security teams</span></a>
         <a href="#evaluate"><b>05</b><span>Writing the TLS exclusion policy</span></a>
         <a href="#evaluate"><b>06</b><span>Measuring user experience</span></a>
@@ -899,7 +1130,7 @@
         <a href="#architecture"><b>02</b><span>SASE versus SD-WAN</span></a>
         <a href="#architecture"><b>03</b><span>SASE versus SSE</span></a>
         <a href="#architecture"><b>04</b><span>ZTNA versus VPN</span></a>
-        <a href="#architecture"><b>05</b><span>Single-vendor versus best-of-breed</span></a>
+        <a href="#sase-deployment-models"><b>05</b><span>Single-vendor versus best-of-breed</span></a>
         <a href="#evaluate"><b>06</b><span>Provider evaluation checklist</span></a>
         <a href="#evaluate"><b>07</b><span>On-premises firewall versus FWaaS</span></a>
         <a href="#evaluate"><b>08</b><span>Proxy versus inline inspection</span></a>
@@ -960,7 +1191,8 @@
         <a href="#definition">What is SASE?</a>
         <a href="#benefits">Benefits</a>
         <a href="#attributes">Core attributes</a>
-        <a href="#how">Deploying SASE</a>
+        <a href="#how">SASE deployment</a>
+        <a href="#steps-to-deploy-sase">Deployment steps</a>
       </nav>
       <nav aria-label="Architecture">
         <h2>Architecture</h2>
@@ -971,14 +1203,14 @@
       </nav>
       <nav aria-label="Project">
         <h2>Project</h2>
-        <a href="https://github.com/KTG1/sase-net-site" rel="noopener">Repository</a>
-        <a href="https://github.com/KTG1/sase-net-site/blob/main/CONTRIBUTING.md" rel="noopener">Contributing</a>
+        <a href="https://github.com/KTG1/sase-net-site" target="_blank" rel="noopener noreferrer">Repository</a>
+        <a href="https://github.com/KTG1/sase-net-site/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a>
         <a href="#contact">Edge notes</a>
       </nav>
     </div>
     <div class="footer-base">
       <span>© <span data-year>2026</span> SASE.Net</span>
-      <span>Customer reviews and expert profiles are illustrative pending final content review.</span>
+      <span>Expert profiles and statistics are illustrative pending final content review.</span>
     </div>
   </footer>
 </body>

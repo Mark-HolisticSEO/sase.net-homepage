@@ -50,9 +50,10 @@ Opening `index.html` directly also works, but a local server more closely matche
 
 ```text
 .
-├── index.html                            # Page content and semantic structure
+├── index.html                            # Homepage structure and content, including the SASE deployment guide
 ├── styles.css                            # Design tokens, layout, responsive states
 ├── script.js                             # Tabs, accordions, diagram swap, reveal
+├── motion.js                             # Scroll reveals, hero parallax, magnetic tilt
 ├── assets/
 │   ├── hero-edge.svg                     # Hero background illustration
 │   └── favicon.svg                       # Browser tab icon
@@ -71,29 +72,32 @@ spine matches the `data-step` attribute on each `<section>`.
 | 02 | Experts | Four specialists with hover biographies, then four statistics |
 | 03 | What is SASE? | Definition, what it converges, what it protects, where enforcement runs |
 | 04 | Benefits | Ten benefits; selecting one changes the diagram and the copy |
-| 05 | Deploying SASE | Five deployment steps beside the policy-plane diagram |
+| 05 | Deploying SASE | Full SASE deployment guide on this page: definition, models, steps, prerequisites, and challenges |
 | 06 | Core attributes | Fourteen attributes in a locally scrolling rail |
 | 07 | Architecture | Thirteen design principles as expandable accordions |
 | 08 | Leadership | Executive quote — **attribution provisional** |
 | 09 | Evaluating a platform | Six evaluation areas as tabs |
-| 10 | Articles | Article hub — **entries provisional** |
+| 10 | Articles | Article hub; SASE deployment guide is live, remaining cards provisional |
 | 11 | Continue reading | Four reading tracks, eight internal links each |
 | 12 | Edge notes | Briefing signup — **offer provisional, form disabled** |
 
 ## Provisional sections
 
 Three sections are on the page with their structure finished but their content
-awaiting client confirmation. Each is marked three ways so placeholder copy
-cannot be mistaken for approved copy:
+awaiting client confirmation. Leadership and Edge notes are marked three ways
+so placeholder copy cannot be mistaken for approved copy:
 
 1. An `is-provisional` class on the `<section>`
 2. A visible `.provisional-flag` notice on the page
 3. An HTML comment listing exactly what must be supplied
 
+Articles keeps five dashed pending cards until titles and destinations land;
+it no longer shows a visitor-facing pending notice.
+
 | Section | Waiting on |
 | --- | --- |
 | Leadership (08) | Named speaker and real title. Must **not** read "CEO of SASE.net" — SASE.net is an informational property, not a company. Placeholder reads `[Name pending] / [Title pending] — Zenarmor`. |
-| Articles (10) | Titles, standfirsts, and destinations for the reviewed articles. Six placeholder cards are in place. |
+| Articles (10) | Titles, standfirsts, and destinations for remaining reviewed articles. The SASE deployment guide is live in the Deploy section (`#how`) on this page. |
 | Edge notes (12) | Confirmed offer, topics, owner, approver, and cadence — plus a real form endpoint. |
 
 **The briefing form has no backend.** Its `<fieldset>` carries `disabled`, so it
@@ -127,11 +131,11 @@ and carry a `↓` in-page arrow rather than a `↗` external one.
 - Update interactive behavior in `script.js`.
 - Swap the hero art by pointing `.hero-bg`'s `background-image` at a photograph;
   nothing else needs to change.
-- Motion lives in the `.js-motion` block of `styles.css` and the reveal/parallax
-  section of `script.js`. Content is visible by default; the hidden start state
-  applies only once JS confirms it is running, so a blocked script never leaves
-  a blank page. `prefers-reduced-motion` is honoured in CSS, re-checked live in
-  JS, and stops the SMIL diagram animations that CSS cannot reach.
+- Motion lives in `motion.js` and the `.js-motion` block of `styles.css`.
+  Content is visible by default; the hidden start state applies only once JS
+  confirms it is running, so a blocked script never leaves a blank page.
+  `prefers-reduced-motion` is honoured in CSS, re-checked live in JS, and
+  stops the SMIL diagram animations that CSS cannot reach.
 - Tab panels stay in the DOM and are toggled with the `hidden` attribute so their
   content remains crawlable. Note that `[hidden]` is forced with `!important` in
   `styles.css`, because the UA rule loses to any component rule that sets `display`.
@@ -155,7 +159,7 @@ Deployment status is available from the repository's **Actions** and **Deploymen
 
 ## Content status
 
-The review metrics, review quotes, and expert profiles are illustrative placeholders. Replace them with verified material before treating the site as production-ready. The two parked sections above must be resolved or stay removed.
+Customer reviews on the homepage are published Zenarmor quotes (City of Nordhorn and named partner accounts). Expert profiles and statistics remain illustrative placeholders. The two parked sections above must be resolved or stay removed.
 
 ## Contributing
 

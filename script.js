@@ -426,6 +426,175 @@ const applyMotionPreference = () => {
 document.documentElement.classList.add('js-motion');
 applyMotionPreference();
 
+/* ------------------------------------------------- smooth in-page scroll --- */
+
+/* Every in-page jump — nav links, hero CTAs, footer links, deep links from
+   another page — runs through one eased animation instead of the browser's
+   native smooth scroll, which eases badly over the long distances this page
+   has (the deployment article alone is several screens).
+
+   Three things the native behaviour gets wrong here and this fixes:
+     · the fixed header overlaps the target, so the heading lands underneath it
+     · reveals inside the destination are still hidden when scrolling ends fast
+     · a mid-flight wheel or touch gesture cannot cancel the animation
+
+   Duration scales with distance and is clamped, so a short hop is quick and a
+   full-page jump never crawls. Reduced motion skips straight to the target. */
+
+const headerEl = document.querySelector('[data-header]');
+
+/* The header shrinks to 66px once scrolled, which is its state by the time any
+   animated scroll lands — so offset against that rather than the tall
+   at-rest height, plus a little breathing room above the heading. */
+const scrolledHeaderHeight = () => (headerEl ? (headerEl.classList.contains('scrolled') ? 66 : 82) : 0);
+const scrollOffset = () => scrolledHeaderHeight() + 24;
+
+/* Reveals inside a destination are marked visible on arrival. Without this a
+   fast jump lands on elements the IntersectionObserver has not processed yet,
+   which reads as a blank panel for a frame or two. */
+const revealWithin = (el) => {
+  el.classList.add('is-visible');
+  el.querySelectorAll('.reveal').forEach((node) => node.classList.add('is-visible'));
+};
+
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+let scrollAnimation = null;
+
+const cancelScrollAnimation = () => {
+  if (!scrollAnimation) return;
+  cancelAnimationFrame(scrollAnimation);
+  scrollAnimation = null;
+};
+
+/* A user gesture always wins over an animation in flight. Without this the
+   page fights the pointer, which feels broken far more than a long scroll. */
+['wheel', 'touchstart', 'pointerdown'].forEach((type) => {
+  addEventListener(type, cancelScrollAnimation, { passive: true });
+});
+addEventListener('keydown', (event) => {
+  if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
+    cancelScrollAnimation();
+  }
+});
+
+const scrollToElement = (el, { focus = false } = {}) => {
+  cancelScrollAnimation();
+
+  const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+  const start = scrollY;
+  const destination = Math.min(
+    maxScroll,
+    Math.max(0, start + el.getBoundingClientRect().top - scrollOffset())
+  );
+  const distance = destination - start;
+
+  /* Focus moves to the destination so the keyboard and screen reader follow the
+     eye. tabindex is applied only when the target cannot already hold focus,
+     and removed afterwards so it never becomes a stray tab stop. */
+  const land = () => {
+    revealWithin(el);
+    if (!focus) return;
+    const focusable = el.matches('a, button, input, select, textarea, [tabindex]');
+    if (!focusable) el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+    if (!focusable) el.addEventListener('blur', () => el.removeAttribute('tabindex'), { once: true });
+  };
+
+  if (reducedMotion || Math.abs(distance) < 2) {
+    scrollTo(0, destination);
+    land();
+    return;
+  }
+
+  /* 520ms for a short hop up to 1100ms across the page — long enough to read as
+     travel (so the reader keeps their place), short enough not to feel slow. */
+  const duration = Math.min(1100, Math.max(520, Math.abs(distance) * 0.42));
+  const startTime = performance.now();
+
+  const step = (now) => {
+    const progress = Math.min(1, (now - startTime) / duration);
+    scrollTo(0, start + distance * easeInOutCubic(progress));
+    if (progress < 1) {
+      scrollAnimation = requestAnimationFrame(step);
+      return;
+    }
+    scrollAnimation = null;
+    land();
+  };
+
+  scrollAnimation = requestAnimationFrame(step);
+};
+
+/* Delegated so links added later (or inside collapsed panels) are covered too.
+   Modified clicks are left to the browser — they open tabs and windows. */
+document.addEventListener('click', (event) => {
+  if (event.defaultPrevented || event.button !== 0) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  const link = event.target.closest('a[href*="#"]');
+  if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+
+  /* Only same-document links; anything pointing elsewhere navigates normally. */
+  const url = new URL(link.href, location.href);
+  if (url.origin !== location.origin || url.pathname !== location.pathname) return;
+
+  const id = decodeURIComponent(url.hash.replace(/^#/, ''));
+  if (!id) return;
+
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  event.preventDefault();
+
+  /* A <details> target (the architecture principles) is opened before the
+     measurement, so the scroll lands on the expanded height, not the summary. */
+  const openable = target.closest('details');
+  if (openable && !openable.open) openable.open = true;
+
+  scrollToElement(target, { focus: true });
+
+  /* The hash is written without triggering hashchange, so history and copyable
+     URLs still work while the animation above owns the movement. */
+  if (url.hash !== location.hash) history.pushState(null, '', url.hash);
+});
+
+/* Deep links (#how, #assess-readiness, …) are resolved again after webfonts
+   finish swapping. Fallback metrics make the first native hash scroll land
+   short, then Barlow/Inter inflate the sections above the target. */
+const scrollToHash = () => {
+  const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  const html = document.documentElement;
+  const previous = html.style.scrollBehavior;
+  html.style.scrollBehavior = 'auto';
+  scrollTo(0, Math.max(0, scrollY + el.getBoundingClientRect().top - scrollOffset()));
+  html.style.scrollBehavior = previous;
+  revealWithin(el);
+};
+
+const fontsReady = document.fonts?.ready || Promise.resolve();
+fontsReady.then(() => {
+  if (!location.hash) return;
+  scrollToHash();
+  requestAnimationFrame(scrollToHash);
+});
+
+/* Back/forward between anchors is animated too, so history navigation matches
+   clicking. hashchange covers the browser's own hash updates. */
+addEventListener('hashchange', () => {
+  const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+  const el = id && document.getElementById(id);
+  if (el) scrollToElement(el);
+});
+addEventListener('popstate', () => {
+  const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+  const el = id && document.getElementById(id);
+  if (el) scrollToElement(el);
+});
+
 motionQuery.addEventListener('change', (event) => {
   reducedMotion = event.matches;
   applyMotionPreference();

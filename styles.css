@@ -45,6 +45,12 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; }
 
+/* Once JS is running, script.js owns in-page scrolling with its own eased,
+   header-aware animation. Native smooth scroll would fight it (two easings
+   racing on the same scrollTop), so it is handed over here. Without JS the
+   declaration above still gives anchors a smooth native scroll. */
+html.js-motion { scroll-behavior: auto; }
+
 body {
   margin: 0;
   color: var(--ink);
@@ -556,7 +562,7 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 
 /* ------------------------------------------------------------------ how --- */
 
-.how-row { display: grid; grid-template-columns: .82fr repeat(4, 1fr); gap: 16px; }
+.how-row { display: grid; grid-template-columns: minmax(140px, .82fr) repeat(5, minmax(0, 1fr)); gap: 16px; margin: 28px 0 8px; }
 
 .how-diagram {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
@@ -577,8 +583,13 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
 }
 .how-card:hover { border-bottom-color: #0f7370; transform: translateY(-4px); }
 .how-card b { color: #0f7370; font: 500 9px var(--mono); letter-spacing: .12em; }
-.how-card h3 { margin: 34px 0 12px; font: 600 clamp(21px, 2vw, 30px)/.98 var(--display); text-transform: uppercase; }
 .how-card p { margin: 0; color: var(--slate); font-size: 13.5px; line-height: 1.7; }
+.how-card .how-card-title {
+  margin: 34px 0 12px;
+  color: var(--ink);
+  font: 600 clamp(21px, 2vw, 30px)/.98 var(--display);
+  text-transform: uppercase;
+}
 
 /* ----------------------------------------------------------- attributes --- */
 
@@ -885,6 +896,267 @@ h2 em, h1 em { font-style: normal; color: #0f7370; }
     animation-duration: .001ms !important; animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
+}
+
+/* ------------------------------------------------------- motion layer --- */
+/* Three.js canvas, GSAP scroll progress, ambient glows, and the spine
+   fill-in live in motion.js / motion.css rules below. Everything here is
+   additive: it sits behind or above existing layers without changing their
+   layout, and degrades to "simply absent" when JS or motion is unavailable. */
+
+.scroll-progress {
+  position: fixed; z-index: 210; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  transform: scaleX(0); transform-origin: left center;
+  pointer-events: none;
+}
+
+.hero-canvas {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; display: block;
+  opacity: 1; mix-blend-mode: screen; pointer-events: none;
+}
+
+/* The globe is drawn full-bleed, then faded out across the left of the frame
+   where the headline and dek sit. Legibility of the copy is never traded for
+   the visual, and the globe still reads as a whole object rather than as
+   something cropped into the right margin. Only applied once there is a
+   distinct text column — below 1100px the copy spans the full width and the
+   scene is already pushed back and dimmed in motion.js instead. */
+@media (min-width: 1100px) {
+  .hero-canvas {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 26%, rgba(0,0,0,.75) 50%, #000 68%);
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.18) 26%, rgba(0,0,0,.75) 50%, #000 68%);
+  }
+}
+
+/* Below that the copy spans the full width and the globe is behind it, so it
+   drops to atmosphere: dimmed, and faded from the top where the headline sits
+   toward the bottom of the frame where there is nothing to read. */
+@media (max-width: 1099px) {
+  .hero-canvas {
+    opacity: .5;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 45%, #000 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 45%, #000 100%);
+  }
+}
+
+.spine-progress {
+  position: absolute; z-index: 5; top: 100vh; bottom: 0; left: var(--spine); width: 1px;
+  background: var(--cyan); box-shadow: 0 0 14px 1px rgba(88, 239, 227, .7);
+  transform: scaleY(0); transform-origin: top; pointer-events: none;
+}
+
+/* Soft drifting light in dark sections only — never behind body copy that
+   needs full contrast. Kept inside the section's own box (no negative
+   overshoot) so it never needs `overflow: hidden`, which would break the
+   sticky attribute panel and benefit visual in nearby sections.
+   `isolation: isolate` gives each host section its own stacking context, so
+   the glow's negative z-index only reaches behind that section's own static
+   content (level below it) instead of behind the whole document. */
+.hero, .experts, .attributes, .leader { isolation: isolate; }
+.ambient-glow {
+  position: absolute; z-index: -1; width: clamp(240px, 30vw, 460px); aspect-ratio: 1;
+  border-radius: 50%; pointer-events: none; filter: blur(60px);
+  background: radial-gradient(circle, rgba(88, 239, 227, .2), transparent 68%);
+}
+.ambient-glow-a { top: 4%; right: 2%; }
+.ambient-glow-b {
+  left: 2%; bottom: 6%;
+  background: radial-gradient(circle, rgba(110, 156, 255, .16), transparent 68%);
+}
+/* The hero already layers explicitly-stacked children (bg, canvas, text), so
+   its glow sits at the same level as .hero-bg — painted above it, DOM order
+   deciding — rather than the negative index the other sections need. */
+.hero .ambient-glow { z-index: 0; }
+
+/* Magnetic tilt cards get their transform fully from motion.js on pointer
+   devices; the plain CSS hover lift below only matters until that JS runs,
+   and remains the whole story on touch, where pointermove never fires. */
+.team-card, .definition-card, .article-card, .trust-card { will-change: transform; }
+
+/* ------------------------------------------------------- article page --- */
+
+.article-page { background: var(--paper); }
+.article-page main::before { display: none; }
+.article-page .site-header { background: rgba(6, 18, 27, .92); border-bottom-color: var(--line-light); }
+.site-header nav > a[aria-current="page"] { color: var(--cyan); }
+.site-header nav > a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+
+.article-hero {
+  padding: 148px var(--gutter) clamp(56px, 7vw, 96px) calc(var(--gutter) + 18px);
+}
+.article-hero-inner { max-width: 920px; }
+.article-hero h1 {
+  margin: 22px 0 28px;
+  max-width: 18ch;
+  font-size: clamp(40px, 6.4vw, 84px);
+  line-height: .92;
+  letter-spacing: -.03em;
+  text-transform: none;
+}
+.article-lede { display: grid; gap: 16px; max-width: 72ch; }
+.article-lede p { margin: 0; color: #b6cacf; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.7; }
+
+.how .deploy-guide { max-width: none; }
+.how .article-lede {
+  margin: 0 0 8px;
+}
+.how .article-lede p { color: var(--slate); }
+.how .article-prose { max-width: none; }
+.how .article-block > p,
+.how .article-subblock > p,
+.how .article-items,
+.how .article-prose ol.article-steps { max-width: 78ch; }
+
+.deploy-jump {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  max-width: 78ch;
+  margin: 0 0 clamp(40px, 5vw, 72px);
+  padding: 18px 0;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+}
+.deploy-jump a {
+  color: #0c6663;
+  font: 500 10px var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.deploy-jump a:hover { color: var(--ink); }
+
+.article-shell {
+  display: grid;
+  grid-template-columns: minmax(196px, .28fr) minmax(0, 1fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: start;
+  padding: var(--section-y) var(--gutter) var(--section-y) calc(var(--gutter) + 18px);
+}
+
+.article-toc {
+  position: sticky; top: 90px;
+  padding: 22px 0 8px;
+}
+.article-toc-label {
+  margin: 0 0 16px;
+  color: #0f7370;
+  font: 500 9px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+}
+.article-toc ol { margin: 0; display: grid; gap: 10px; }
+.article-toc li { padding-left: 14px; border-left: 1px solid var(--line-dark); }
+.article-toc a {
+  color: var(--slate); text-decoration: none;
+  font-size: 13.5px; line-height: 1.45;
+  transition: color .2s var(--ease);
+}
+.article-toc a:hover { color: var(--ink); }
+
+.article-prose { min-width: 0; max-width: 78ch; }
+.article-block { margin: 0 0 clamp(48px, 6vw, 88px); padding-top: 8px; }
+.article-block > h3 {
+  margin: 0 0 22px;
+  max-width: 22ch;
+  font: 600 clamp(32px, 4.2vw, 58px)/.96 var(--display);
+  letter-spacing: -.025em;
+  text-transform: none;
+}
+.article-subblock { margin: 36px 0 0; padding: 28px 0 0; border-top: 1px solid var(--line-dark); }
+.article-subblock h4 {
+  margin: 0 0 18px;
+  max-width: 28ch;
+  font: 600 clamp(24px, 2.6vw, 36px)/1.08 var(--display);
+  letter-spacing: -.02em;
+  text-transform: none;
+}
+.article-subblock h5 {
+  margin: 0 0 14px;
+  font: 600 clamp(20px, 2vw, 28px)/1.14 var(--display);
+  letter-spacing: -.015em;
+  text-transform: none;
+}
+.article-prose p {
+  margin: 0 0 14px;
+  color: var(--slate);
+  font-size: 16px; line-height: 1.75;
+}
+.article-prose p:last-child { margin-bottom: 0; }
+.article-block > h3 + p,
+.article-subblock > h4 + p,
+.article-subblock > h5 + p {
+  color: var(--ink);
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.68;
+}
+.article-prose a {
+  color: #0c6663;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.article-prose a:hover { color: var(--ink); }
+
+.article-items { display: grid; gap: 14px; margin: 8px 0 16px; }
+.article-items article {
+  padding: 20px 22px 18px;
+  background: var(--white);
+  border-top: 2px solid var(--ink);
+}
+.article-items p { margin: 0; }
+.article-items strong { color: var(--ink); }
+
+.article-prose ol.article-steps {
+  margin: 8px 0 16px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 12px;
+}
+.article-prose ol.article-steps li {
+  position: relative;
+  padding: 18px 20px 18px 64px;
+  background: var(--white);
+  color: var(--slate);
+  font-size: 15.5px;
+  line-height: 1.7;
+  counter-increment: step;
+}
+.article-prose ol.article-steps li::before {
+  position: absolute; left: 18px; top: 20px;
+  color: #0f7370;
+  font: 500 9px var(--mono); letter-spacing: .12em;
+  content: counter(step, decimal-leading-zero);
+}
+
+.article-next {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  margin-top: 12px; padding-top: 36px;
+  border-top: 1px solid var(--line-dark);
+}
+.article-next a {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 20px;
+  min-height: 54px; padding: 0 22px;
+  color: var(--navy); background: var(--cyan); border: 1px solid var(--cyan);
+  font: 500 10px var(--mono); letter-spacing: .07em; text-transform: uppercase;
+  text-decoration: none;
+}
+.article-next a:last-child {
+  color: var(--ink); background: transparent; border-color: var(--line-dark-2);
+}
+.article-next a:hover { transform: translateY(-1px); }
+
+.how-follow { margin: 36px 0 0; }
+.article-card.is-pending { border-style: dashed; pointer-events: none; }
+
+@media (max-width: 980px) {
+  .article-shell { grid-template-columns: 1fr; }
+  .article-toc { position: static; padding-top: 0; }
+  .article-toc ol { grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .article-hero h1 { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress, .hero-canvas, .spine-progress, .ambient-glow { display: none; }
 }
 
 /* ---------------------------------------------------------- responsive --- */
